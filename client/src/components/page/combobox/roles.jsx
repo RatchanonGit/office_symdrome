@@ -77,9 +77,8 @@ const Roles = () => {
             });
         }
         else {
-            createRole(value)
+            createRole(user.token,value)
                 .then(res => {
-                    console.log(res.data)
                     toast.success((res.data), {
                         position: "top-center",
                         autoClose: 2000
@@ -88,9 +87,11 @@ const Roles = () => {
                     setValue({
                         role_name: ""
                     });
-
                 }).catch(error => {
-                    console.log(error.data)
+                    toast.error((error.response.data), {
+                        position: "top-center",
+                        autoClose: 2000
+                    });
                 })
         }
     }
@@ -111,7 +112,10 @@ const Roles = () => {
                 });
             })
             .catch(error => {
-                console.log(error.data);
+                toast.error((error.response.data), {
+                    position: "top-center",
+                    autoClose: 2000
+                });
             });
     };
 
@@ -142,8 +146,11 @@ const Roles = () => {
                         autoClose: 2000
                     });
                 })
-                .catch((err) => {
-                    console.log(err.response);
+                .catch((error) => {
+                    toast.error((error.response.data), {
+                        position: "top-center",
+                        autoClose: 2000
+                    });
                 });
         }
     };

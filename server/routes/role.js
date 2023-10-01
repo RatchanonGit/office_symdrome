@@ -9,29 +9,29 @@ const { getRoles,
 
 const { auth,adminCheck } = require('../middleware/auth')
 
-//@Endpoint  http://localhost:5000/api/roles
+//@Endpoint  http://localhost:5000/api/option/roles
 //@Method    GET
 //@Access    Private
-router.get('/roles', auth,adminCheck, getRoles)
+router.get('/option/roles', auth, getRoles)
 
 //@Endpoint  http://localhost:5000/api//role/1
 //@Method    GET
 //@Access    Private
-router.get('/role/:id', getRoleById)
+router.get('/option/role/:id',auth, adminCheck, getRoleById)
 
-//@Endpoint  http://localhost:5000/api/role
+//@Endpoint  http://localhost:5000/api/option/role
 //@Method    POST
 //@Access    Private
-router.post('/role', addRole)
+router.post('/option/role',auth, adminCheck, addRole)
 
-//@Endpoint  http://localhost:5000/api/role/1
+//@Endpoint  http://localhost:5000/api/option/role/1
 //@Method    DELETE
 //@Access    Private
-router.delete('/role/:id', removeRole)
+router.delete('/option/role/:id',auth, adminCheck, removeRole)
 
-//@Endpoint  http://localhost:5000/api/role/1
+//@Endpoint  http://localhost:5000/api/option/role/1
 //@Method    PUT
 //@Access    Private
-router.put('/role/:id', updateRole)
+router.put('/option/role/:id',auth, adminCheck, updateRole)
 
 module.exports = router;

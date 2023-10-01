@@ -77,7 +77,7 @@ const Titles = () => {
             });
         }
         else {
-            createTitle(value)
+            createTitle(user.toekn,value)
                 .then(res => {
                     console.log(res.data)
                     toast.success((res.data), {
@@ -90,7 +90,10 @@ const Titles = () => {
                     });
 
                 }).catch(error => {
-                    console.log(error.data)
+                    toast.error((error.response.data), {
+                        position: "top-center",
+                        autoClose: 2000
+                    });
                 })
         }
     }
@@ -111,7 +114,10 @@ const Titles = () => {
                 });
             })
             .catch(error => {
-                console.log(error.data);
+                toast.error((error.response.data), {
+                    position: "top-center",
+                    autoClose: 2000
+                });
             });
     };
 
@@ -142,8 +148,11 @@ const Titles = () => {
                         autoClose: 2000
                     });
                 })
-                .catch((err) => {
-                    console.log(err.response);
+                .catch((error) => {
+                    toast.error((error.response.data), {
+                        position: "top-center",
+                        autoClose: 2000
+                    });
                 });
         }
     };

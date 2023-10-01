@@ -116,8 +116,11 @@ const ListSchedules = () => {
                         autoClose: 2000
                     });
                 })
-                .catch((err) => {
-                    console.log(err.response);
+                .catch((error) => {
+                    toast.error((error.response.data), {
+                        position: "top-center",
+                        autoClose: 2000
+                    });
                 });
         }
     };
@@ -161,6 +164,7 @@ const ListSchedules = () => {
             >
                 <Schedules
                     onCreated={handleCreated}
+                    onClose={() => setIsModalOpen(false)}
                 />
             </Modal>
 

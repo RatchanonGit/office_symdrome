@@ -19,9 +19,9 @@ const Login = () => {
         if (role === "admin") {
             setTimeout(() => {
                 navigate("/admin/home");
-            }, 1000); 
+            }, 2000); 
         } else {
-            navigate("/user/home");
+            navigate("/admin/home");
         }
     }
 
@@ -96,7 +96,7 @@ const Login = () => {
                     <div className="mb-4">
                         <p className="text-red-600 text-base flex items-center justify-center ">{error}</p>
                     </div>
-                    <button type="submit" className="w-full px-6 py-3 bg-blue text-white rounded hover:bg-purple-600 mt-6">
+                    <button type="submit" className="w-full px-6 py-3 bg-blue text-white rounded h">
                         <h1 className="text-lg uppercase font-semibold">Login</h1>
                     </button>
                 </form>

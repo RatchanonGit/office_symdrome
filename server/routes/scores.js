@@ -7,29 +7,31 @@ const { getScores,
         updateScore
 } = require('../controllers/scores')
 
-//@Endpoint  http://localhost:5000/api/scores
+const { auth,adminCheck } = require('../middleware/auth')
+
+//@Endpoint  http://localhost:5000/api/user/scores
 //@Method    GET
 //@Access    Private
-router.get('/scores', getScores)
+router.get('/user/scores',auth, getScores)
 
-//@Endpoint  http://localhost:5000/api//score/1
+//@Endpoint  http://localhost:5000/api/user/score/1
 //@Method    GET
 //@Access    Private
-router.get('/score/:id', getScoreById)
+router.get('/user/score/:id',auth, getScoreById)
 
-//@Endpoint  http://localhost:5000/api/score
+//@Endpoint  http://localhost:5000/api/user/score
 //@Method    POST
 //@Access    Private
-router.post('/score', addScore)
+router.post('/user/score',auth,adminCheck, addScore)
 
-//@Endpoint  http://localhost:5000/api/score/1
+//@Endpoint  http://localhost:5000/api/user/score/1
 //@Method    DELETE
 //@Access    Private
-router.delete('/score/:id', removeScore)
+router.delete('/user/score/:id',auth,adminCheck, removeScore)
 
-//@Endpoint  http://localhost:5000/api/score/1
+//@Endpoint  http://localhost:5000/api/user/score/1
 //@Method    PUT
 //@Access    Private
-router.put('/score/:id',updateScore)
+router.put('/score/:id',auth,adminCheck,updateScore)
 
 module.exports = router;

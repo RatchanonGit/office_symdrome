@@ -164,8 +164,11 @@ const ListUser = () => {
                         autoClose: 2000
                     });
                 })
-                .catch((err) => {
-                    console.log(err.response);
+                .catch((error) => {
+                    toast.error((error.response.data), {
+                        position: "top-center",
+                        autoClose: 2000
+                    });
                 });
         }
     };
@@ -232,6 +235,7 @@ const ListUser = () => {
             >
                 <CreateUser
                     onCreated={handleCreated}
+                    onClose={() => setIsCreateModalOpen(false)}
                 />
             </Modal>
             <Modal

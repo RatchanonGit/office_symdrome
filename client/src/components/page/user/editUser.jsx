@@ -66,7 +66,10 @@ const EditUser = ({ userId, data, onClose, onUpdated }) => {
                 onUpdated();
                 onClose();
             }).catch(error => {
-                console.log(error.data);
+                toast.error((error.response.data), {
+                    position: "top-center",
+                    autoClose: 2000
+                });
             });
     }
 

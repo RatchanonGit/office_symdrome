@@ -56,7 +56,10 @@ const EditSchedules = ({ schedulesId, schedules, onClose, onUpdated }) => {
                 onUpdated();
                 onClose();
             }).catch(error => {
-                console.log(error.data)
+                toast.error((error.response.data), {
+                    position: "top-center",
+                    autoClose: 2000
+                });
             })
     }
 

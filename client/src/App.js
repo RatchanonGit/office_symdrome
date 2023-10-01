@@ -61,51 +61,51 @@ function App() {
 
         {/* role == admin */}
         <Route path="/schedules" element={
-          <AdminRote>
+          <UserRoute>
             <ListSchedules />
-          </AdminRote>
+          </UserRoute>
         }></Route>
 
         <Route path="/role" element={
-          <AdminRote>
+          <UserRoute>
             <Roles />
-          </AdminRote>
+          </UserRoute>
         }></Route>
 
         <Route path="/title" element={
-          <AdminRote>
+          <UserRoute>
             <Titles />
-          </AdminRote>
+          </UserRoute>
         }></Route>
 
         <Route path="/institution" element={
-          <AdminRote>
+          <UserRoute>
             <Institution />
-          </AdminRote>
+          </UserRoute>
         }></Route>
 
         <Route path="/listUser" element={
-          <AdminRote>
+          <UserRoute>
             <ListUser />
-          </AdminRote>
+          </UserRoute>
         }></Route>
 
         <Route path="/scores" element={
-          <AdminRote>
+          <UserRoute>
             <Score />
-          </AdminRote>
+          </UserRoute>
         }></Route>
 
         <Route path="/createuser" element={
-          <AdminRote>
+          <UserRoute>
             <CreateUser />
-          </AdminRote>
+          </UserRoute>
         }></Route>
 
         <Route path="/admin/home" element={
-          <AdminRote>
+          <UserRoute>
             <HomeAdmin />
-          </AdminRote>
+          </UserRoute>
         }> </Route>
 
         {/* role == user */}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { createSchedules } from '../../functions/schedules'
 import { toast } from "react-toastify";
 
-const Schedules = ({ onCreated }) => {
+const Schedules = ({ onCreated, onClose }) => {
     const [value, setValue] = useState({
         days_of_week: "",
         schedule_time: "",
@@ -58,10 +58,12 @@ const Schedules = ({ onCreated }) => {
                     autoClose : 2000
                   });
                 onCreated();
-
-
+                onClose()
             }).catch(error => {
-                console.log(error.data)
+                toast.error((error.response.data), {
+                    position: "top-center",
+                    autoClose: 2000
+                });
             })
     }
 

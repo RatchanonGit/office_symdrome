@@ -7,7 +7,7 @@ import { AiOutlineUser, AiOutlineEdit } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-const CreateUser = ({ onCreated }) => {
+const CreateUser = ({ onCreated, onClose }) => {
     const { user } = useSelector((state) => ({ ...state }));
     const [title, setTitle] = useState([]);
     const [role, setRole] = useState([]);
@@ -79,8 +79,12 @@ const CreateUser = ({ onCreated }) => {
                     autoClose: 2000
                 });
                 onCreated();
+                onClose();
             }).catch(error => {
-                console.log(error.response.data);
+                toast.error((error.response.data), {
+                    position: "top-center",
+                    autoClose: 2000
+                });
             });
     }
 

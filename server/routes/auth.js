@@ -10,7 +10,7 @@ const {auth, adminCheck, currentUser} = require('../middleware/auth')
 //@Endpoint  http://localhost:5000/api/login
 //@Method    POST
 //@Access    Private
-router.post('/login', login);
+router.post('/user/login', login);
 
 //@Endpoint  http://localhost:3000/api/current-user
 //@Method    POST

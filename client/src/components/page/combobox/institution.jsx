@@ -77,7 +77,7 @@ const Institutions = () => {
             });
         }
         else {
-            createInstitution(value)
+            createInstitution(user.token,value)
                 .then(res => {
                     console.log(res.data)
                     toast.success((res.data), {
@@ -90,7 +90,10 @@ const Institutions = () => {
                     });
 
                 }).catch(error => {
-                    console.log(error.data)
+                    toast.error((error.response.data), {
+                        position: "top-center",
+                        autoClose: 2000
+                    });
                 })
         }
     }
@@ -111,7 +114,10 @@ const Institutions = () => {
                 });
             })
             .catch(error => {
-                console.log(error.data);
+                toast.error((error.response.data), {
+                    position: "top-center",
+                    autoClose: 2000
+                });
             });
     };
 
@@ -142,8 +148,11 @@ const Institutions = () => {
                         autoClose: 2000
                     });
                 })
-                .catch((err) => {
-                    console.log(err.response);
+                .catch((error) => {
+                    toast.error((error.response.data), {
+                        position: "top-center",
+                        autoClose: 2000
+                    });
                 });
         }
     };
