@@ -124,7 +124,7 @@ const CreateUser = ({ onCreated }) => {
                     )}
                 </div>
 
-                <div className="flex">
+                <div className="flex w-full">
                     <div className="w-[140px] mr-8">
                         <label className="block text-lg font-semibold text-blue">Title:</label>
                         <select
@@ -153,7 +153,7 @@ const CreateUser = ({ onCreated }) => {
                     <div className="w-[300px]">
                         <label className="block text-lg font-semibold text-blue">Password :</label>
                         <input
-                            type="password"
+                            type="text"
                             name="password"
                             onChange={handleChange}
                             className="w-full border border-gray-300 rounded-md py-2 px-3"
@@ -202,7 +202,7 @@ const CreateUser = ({ onCreated }) => {
                     </div>
                 </div>
                 <div className="mt-6 flex">
-                    <div className="w-[300px] mr-8">
+                    <div className="w-[385px] mr-8">
                         <label className="block text-lg font-semibold text-blue">Institution :</label>
                         <select
                             name="institution_id"
@@ -218,7 +218,7 @@ const CreateUser = ({ onCreated }) => {
                         </select>
                     </div>
 
-                    <div className="w-[200px] mr-8">
+                    <div className="w-[385px] ">
                         <label className="block text-lg font-semibold text-blue">Role :</label>
                         <select
                             name="role_id"
@@ -234,7 +234,7 @@ const CreateUser = ({ onCreated }) => {
                         </select>
                     </div>
                 </div>
-                <div className="mt-6 flex">
+                <div className="mt-8 flex justify-end mr-8">
                     <button className="bg-blue text-white py-3 px-5 rounded-xl">Create User</button>
                 </div>
             </form>

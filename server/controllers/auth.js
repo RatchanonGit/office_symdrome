@@ -29,7 +29,7 @@ const login = async (req, res) => {
           username: user.username,
           role: role,
           firstname: user.fname,
-          lastname: user.lname
+          lastname: user.lname,
         },
       };
 

@@ -221,7 +221,7 @@ const ListUser = () => {
                 style={{
                     content: {
                         width: '1000px',
-                        height: 'auto',
+                        height: '650px',
                         margin: 'auto',
                         padding: 0,
                     },

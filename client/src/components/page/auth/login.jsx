@@ -62,14 +62,14 @@ const Login = () => {
     }
   
     return (
-        <div className="min-h-[89vh] flex justify-between  bg-[#fbf9ff]" >
-            <img src={home} alt="home" className='w-2/5 ml-40' />
-            <div className="w-full max-w-md bg-white p-6 ">
-                <div className='bg-purple-500 rounded-full p-8 shadow w-[125px] mx-auto mt-6'>
+        <div className="min-h-[89vh] flex justify-between bg-slate-50" >
+            <img src={home} alt="home" className='w-3/5' />
+            <div className="w-full max-w-md bg-white p-8">
+                <div className='bg-blue rounded-full p-8 shadow w-[125px] mx-auto mt-6'>
                     <RiAdminLine size={60} color='white' />
                 </div>
 
-                <h1 className="text-xl font-medium uppercase  mt-3 ml-[170px] text-purple-500">Login</h1>
+                <h1 className="text-xl font-medium uppercase  mt-3 ml-[170px] text-blue">Login</h1>
                 <form onSubmit={handleSubmit} className='mt-9'>
                     <div className="mb-4">
                         <label htmlFor="username" className="block text-base font-medium text-black uppercase">Username :</label>
@@ -96,7 +96,7 @@ const Login = () => {
                     <div className="mb-4">
                         <p className="text-red-600 text-base flex items-center justify-center ">{error}</p>
                     </div>
-                    <button type="submit" className="w-full px-6 py-3 bg-purple-500 text-white rounded hover:bg-purple-600 mt-6">
+                    <button type="submit" className="w-full px-6 py-3 bg-blue text-white rounded hover:bg-purple-600 mt-6">
                         <h1 className="text-lg uppercase font-semibold">Login</h1>
                     </button>
                 </form>

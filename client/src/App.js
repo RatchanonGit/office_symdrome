@@ -41,7 +41,7 @@ function App() {
             username: res.data.payload.user.username,
             role: res.data.payload.user.role,
             firstname: res.data.payload.user.firstname,
-            lastname: res.data.payload.user.lastname
+            lastname: res.data.payload.user.lastname,
           },
         });
       })
@@ -50,6 +50,7 @@ function App() {
         console.log(err);
       });
   }
+  console.log()
   return (
     <div className="App">
       <ToastContainer />
