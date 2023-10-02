@@ -6,7 +6,7 @@ const UserRoute = ({ children }) => {
     const { user } = useSelector((state) => ({ ...state }))
     return user 
         ? children
-        : alert('please logout')
+        : <LoadingToRedirect/>
 }
 
 export default UserRoute

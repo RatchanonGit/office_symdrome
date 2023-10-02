@@ -17,7 +17,7 @@ const getScoreById = (req, res) => {
 }
 
 const addScore = (req, res) => {
-    const {user_id, task_description, score_value, watch_time, score_date } = req.body;
+    const { user_id, task_description, score_value, watch_time, score_date } = req.body;
     pool.query(queries.addScore, [user_id, task_description, score_value, watch_time, score_date], (error, results) => {
         if (error) throw error;
         res.status(201).send(`Score Created Successfully.`)
@@ -42,10 +42,28 @@ const updateScore = (req, res) => {
     })
 }
 
+const getSumScoreAndSumtime = (req, res) => {
+    const id = parseInt(req.params.id)
+    pool.query(queries.sumScoreAndSumtime, [id], (error, results) => {
+        if (error) throw error;
+        res.status(200).json(results.rows);
+    })
+}
+
+const getScoreLimitDate = (req, res) => {
+    const id = parseInt(req.params.id)
+    pool.query(queries.scoreLimitdate, [id], (error, results) => {
+        if (error) throw error;
+        res.status(200).json(results.rows);
+    })
+}
+
 module.exports = {
     getScores,
     getScoreById,
     addScore,
     removeScore,
-    updateScore
+    updateScore,
+    getSumScoreAndSumtime,
+    getScoreLimitDate
 }

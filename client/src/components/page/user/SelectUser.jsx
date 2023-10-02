@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'chart.js/auto';
-import { listscore } from '../../functions/score'
+import { listSumScoreAndSumTime, listScoreLimitDate } from '../../functions/score'
 import { useSelector } from "react-redux";
 import { AiFillStar } from "react-icons/ai";
 
@@ -8,17 +8,19 @@ import { AiFillStar } from "react-icons/ai";
 import 'chartjs-adapter-date-fns';
 
 const SelectUser = ({ userId, data }) => {
-    const [scoreData, setScoreData] = useState([]);
+    const [scoreLimitDate, setScoreLimitDate] = useState([]);
+    const [scoreAndTime, setScoreAndTime] = useState([])
     const { user } = useSelector((state) => ({ ...state }));
     const selectedUser = data.find(item => item.user_id === userId);
     const chartRef = useRef(null);
-    const chartInstanceRef = useRef(null); 
+    const chartInstanceRef = useRef(null);
     const [isScoreDataLoaded, setIsScoreDataLoaded] = useState(false);
 
-    const loadData = (authtoken) => {
-        listscore(authtoken)
+    const loadDataScoreAndtime = (authtoken) => {
+        listSumScoreAndSumTime(userId, authtoken)
             .then(res => {
-                setScoreData(res.data);
+                setScoreAndTime(res.data);
+                console.log(res.data);
                 setIsScoreDataLoaded(true);
             })
             .catch(error => {
@@ -26,37 +28,35 @@ const SelectUser = ({ userId, data }) => {
             });
     }
 
-    const totalScore = scoreData.reduce((accumulator, score) => {
-        if (score.user_id === userId) {
-            return accumulator + score.score_value;
-        }
-        return accumulator;
-    }, 0);
-
-    const totalWatchTime = scoreData.reduce((accumulator, score) => {
-        if (score.user_id === userId) {
-            return accumulator + score.watch_time;
-        }
-        return accumulator;
-    }, 0);
-
+    const loadDataScoreLimitDate = (authtoken) => {
+        listScoreLimitDate(userId, authtoken)
+            .then(res => {
+                setScoreLimitDate(res.data);
+                console.log(res.data);
+                setIsScoreDataLoaded(true);
+            })
+            .catch(error => {
+                console.log(error.response.data);
+            });
+    }
 
     useEffect(() => {
         if (!isScoreDataLoaded) {
-            loadData(user.token);
+            loadDataScoreLimitDate(user.token);
+            loadDataScoreAndtime(user.token)
         }
     }, [isScoreDataLoaded, user.token]);
 
     useEffect(() => {
         if (isScoreDataLoaded) {
-            if (scoreData.length > 0) {
+            if (scoreLimitDate.length > 0) {
                 if (chartInstanceRef.current) {
                     chartInstanceRef.current.destroy();
                 }
                 const chartData = {
                     labels: [],
                     datasets: [{
-                        label: 'คะแนน',
+                        label: 'Score',
                         data: [],
                         backgroundColor: '#0F2C59',
                         borderColor: '#0F2C59',
@@ -64,11 +64,9 @@ const SelectUser = ({ userId, data }) => {
                         fill: false,
                     }],
                 };
-                scoreData.forEach(score => {
-                    if (score.user_id === userId) {
-                        chartData.labels.push(score.score_date.slice(0, 10));
-                        chartData.datasets[0].data.push(score.score_value);
-                    }
+                scoreLimitDate.forEach(score => {
+                    chartData.labels.push(score.formatted_date);
+                    chartData.datasets[0].data.push(score.total_score);
                 });
                 const ctx = chartRef.current.getContext('2d');
 
@@ -103,7 +101,8 @@ const SelectUser = ({ userId, data }) => {
                 chartRef.current.style.height = '250px';
             }
         }
-    }, [isScoreDataLoaded, scoreData, userId]);
+    }, [isScoreDataLoaded, scoreLimitDate]);
+
 
 
     return (
@@ -112,7 +111,7 @@ const SelectUser = ({ userId, data }) => {
                 <div>
                     <p className='text-center text-2xl my-2 text-blue'>User statistics</p>
                     <div className='flex items-center bg-blue px-3 py-1 text-white'>
-                    <img src={selectedUser.image} alt="" className='w-16 h-16 mr-4 rounded-full object-cover ml-5' />
+                        <img src={selectedUser.image} alt="" className='w-16 h-16 mr-4 rounded-full object-cover ml-5' />
                         <div className="flex flex-col w-full">
                             <div className="flex justify-between items-center">
                                 <p className='text-base'>{selectedUser.title_name} {selectedUser.fname} {selectedUser.lname}</p>
@@ -125,13 +124,23 @@ const SelectUser = ({ userId, data }) => {
                     <div className='flex  justify-between mx-10 my-6'>
                         <div className='rounded-md border-[2px] border-blue w-60'>
                             <p className='bg-blue text-white text-center p-2 text-xl'>Active time</p>
-                            <p className='text-center p-5 text-2xl text-blue'>{totalWatchTime} minute</p>
+                            {scoreAndTime[0] ? (
+                                <p className='text-center p-5 text-2xl text-blue'>{scoreAndTime[0].watch_time} minute</p>
+                            ) : (
+                                <p className='text-center p-5 text-2xl text-blue'>Loading...</p>
+                            )}
                         </div>
                         <div className='rounded-md border-[2px] border-blue w-60'>
-                            <p className='bg-blue text-center text-white p-2 text-xl '>Total score</p>
-                            <p className='text-center p-5 text-2xl text-blue'>{totalScore} score</p>
+                            <p className='bg-blue text-center text-white p-2 text-xl'>Total score</p>
+                            {scoreAndTime[0] ? (
+                                <p className='text-center p-5 text-2xl text-blue'>{scoreAndTime[0].total_score} score</p>
+                            ) : (
+                                <p className='text-center p-5 text-2xl text-blue'>Loading...</p>
+                            )}
                         </div>
                     </div>
+
+
                     <canvas ref={chartRef}></canvas>
 
                 </div>
