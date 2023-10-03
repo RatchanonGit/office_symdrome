@@ -1,105 +1,300 @@
-import React, { useState, useEffect, useRef } from 'react';
-import MenuAdmin from '../../layouts/menuAdmin';
-import { listUser } from '../../functions/user';
-import { useSelector } from "react-redux";
-import Chart from 'chart.js/auto'; // เพิ่ม import Chart
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { Line,Bar } from 'react-chartjs-2';
+import {
+    listSumScore,
+    listSumTime,
+    listSumUser,
+    listTopTenScore,
+    listSumUserOnInstitution,
+    listSumScoreLimitDate
+} from '../../functions/dashboard';
+
+import {
+    UserOutlined,
+    ScheduleOutlined,
+    LineChartOutlined,
+    SolutionOutlined,
+    TrophyOutlined
+} from '@ant-design/icons';
 
 const Home = () => {
-    const [data, setData] = useState([]);
+    const [sumUser, setSumUser] = useState([]);
+    const [sumScore, setSumScore] = useState([]);
+    const [sumTime, setSumTime] = useState([]);
+    const [sumScoreLimitDate, setSumScoreLimitDate] = useState([]);
+    const [topTenScore, setTopTenScore] = useState([]);
+    const [sumUserOnInstitution, setSumUserOnInstitution] = useState([]);
     const { user } = useSelector((state) => ({ ...state }));
-    const [dataCount, setDataCount] = useState(0); // เพิ่ม state เพื่อเก็บจำนวนข้อมูล
-    const [topRankedUsers, setTopRankedUsers] = useState([]);
-    const chartRef = useRef(null); // สร้าง ref สำหรับ Canvas
 
-    useEffect(() => {
-        loadData(user.token);
-    }, [user]);
-
-    useEffect(() => {
-        // เรียกฟังก์ชันสร้างกราฟเมื่อมีการอัพเดทข้อมูล
-        createChart(data);
-    }, [data]);
-
-    const loadData = (authtoken) => {
-        listUser(authtoken)
-            .then(res => {
-                setData(res.data);
-                setDataCount(res.data.length); // ตั้งค่าจำนวนข้อมูล
-                console.log(res.data);
-                const sortedData = [...res.data].sort((a, b) => b.rank - a.rank); // เรียงลำดับข้อมูลตามแรงค์
-                const top10RankedUsers = sortedData.slice(0,10); // เลือกเฉพาะ top 10 ของแรงค์
-                setTopRankedUsers(top10RankedUsers);
-                console.log(top10RankedUsers);
+    const loadDataSumUser = (authtoken) => {
+        listSumUser(authtoken)
+            .then((res) => {
+                setSumUser(res.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error.response.data);
             });
-    }
+    };
 
-    const createChart = (data) => {
-        const institutions = {}; // สร้างออบเจ็กต์เพื่อเก็บจำนวนผู้ใช้ในแต่ละสาขา
+    const loadDataSumScore = (authtoken) => {
+        listSumScore(authtoken)
+            .then((res) => {
+                setSumScore(res.data);
+            })
+            .catch((error) => {
+                console.log(error.response.data);
+            });
+    };
 
-        // นับจำนวนผู้ใช้ในแต่ละสาขา
-        data.forEach(user => {
-            const institutionName = user.institution_name;
-            if (!institutions[institutionName]) {
-                institutions[institutionName] = 1;
-            } else {
-                institutions[institutionName]++;
-            }
-        });
+    const loadDataSumTime = (authtoken) => {
+        listSumTime(authtoken)
+            .then((res) => {
+                setSumTime(res.data);
+            })
+            .catch((error) => {
+                console.log(error.response.data);
+            });
+    };
 
-        // แปลงข้อมูลในรูปแบบที่ Chart.js สามารถใช้ได้
-        const labels = Object.keys(institutions);
-        const dataValues = Object.values(institutions);
+    const loadDataSumScoreLimitDate = (authtoken) => {
+        listSumScoreLimitDate(authtoken)
+            .then((res) => {
+                setSumScoreLimitDate(res.data);
+            })
+            .catch((error) => {
+                console.log(error.response.data);
+            });
+    };
 
-        // ล้าง Canvas เก่า
-        if (chartRef.current) {
-            chartRef.current.destroy();
-        }
+    const loadDataTopTenScore = (authtoken) => {
+        listTopTenScore(authtoken)
+            .then((res) => {
+                setTopTenScore(res.data);
+            })
+            .catch((error) => {
+                console.log(error.response.data);
+            });
+    };
 
-        // สร้าง Canvas และกราฟใหม่
-        const ctx = document.getElementById('userChart');
-        chartRef.current = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'จำนวนผู้ใช้',
-                    data: dataValues,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
+    const loadDataSumUserOnInstitution = (authtoken) => {
+        listSumUserOnInstitution(authtoken)
+            .then((res) => {
+                setSumUserOnInstitution(res.data);
+                console.log(res.data);
+            })
+            .catch((error) => {
+                console.log(error.response.data);
+            });
+    };
+
+    useEffect(() => {
+        loadDataSumUser(user.token);
+        loadDataSumScore(user.token);
+        loadDataSumTime(user.token);
+        loadDataSumScoreLimitDate(user.token);
+        loadDataSumUserOnInstitution(user.token);
+        loadDataTopTenScore(user.token);
+    }, [user]);
+
+    const chartLabelsScore = sumScoreLimitDate.map((entry) => entry.formatted_date);
+    const chartDataPointsScore = sumScoreLimitDate.map((entry) => parseInt(entry.total_score, 10));
+
+    const chartDataScore = {
+        labels: chartLabelsScore,
+        datasets: [
+            {
+                label: 'Total Score',
+                data: chartDataPointsScore,
+                fill: true,
+                backgroundColor: '#0f2d5923',
+                borderColor: '#0F2C59',
+
+                borderWidth: 2,
             },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    }
+        ],
+    };
+
+    const chartLabels = sumUserOnInstitution.map(entry => entry.institution_name);
+    const chartDataPoints = sumUserOnInstitution.map(entry => parseInt(entry.sum_institution, 10));
+
+    const chartData = {
+        labels: chartLabels,
+        datasets: [
+            {
+                label: 'จำนวนผู้ใช้',
+                data: chartDataPoints,
+                backgroundColor: '#0f2d5923', // สีของแท่งกราฟ
+                borderColor: '#0F2C59', // สีของเส้นขอบแท่งกราฟ
+                borderWidth: 2,
+            },
+        ],
+    };
 
     return (
-        <div className='flex'>
-            <MenuAdmin />
-            <div><p>จำนวนข้อมูล: {dataCount}</p> {/* แสดงจำนวนข้อมูลที่นับได้ */}</div>
-            <div>
-                <h2>Top 10 ของแรงค์</h2>
-                <ul>
-                    {topRankedUsers.map((user, index) => (
-                        <li key={index}>{user.username} - Rank: {user.rank}</li>
-                    ))}
-                </ul>
+        <div className="w-full h-full p-10 bg-gray">
+            <div className="flex justify-center">
+                <div className="rounded-xl bg-white border-white w-72  pt-4 pl-8 mr-8">
+                    <p className='text-xl flex items-center  text-blue'><UserOutlined style={{
+                        background: '#0F2C59',
+                        borderRadius: '20px',
+                        fontSize: '20px',
+                        padding: '10px',
+                        color: '#F8F6F4',
+                        marginRight: '15px',
+                    }} /> Total User</p>
+                    {sumUser[0] ? (
+                        <>
+                            <span className="text-center pl-14 text-[50px] text-blue ">{sumUser[0].user_count}
+                                <p className='text-sm inline pl-2'>people</p></span>
+
+                        </>
+                    ) : (
+                        <p className="text-center px-8 pt-4 text-4xl text-blue font-semibold">Loading...</p>
+                    )}
+                </div>
+
+                <div className="rounded-xl bg-white border-white w-72  pt-4 pl-8 mr-8">
+                    <p className='text-xl flex items-center  text-blue'><ScheduleOutlined style={{
+                        background: '#0F2C59',
+                        borderRadius: '20px',
+                        fontSize: '20px',
+                        padding: '10px',
+                        color: '#F8F6F4',
+                        marginRight: '15px',
+                    }} />User online</p>
+                    {sumUser[0] ? (
+                        <>
+                            <span className="text-center pl-14 text-[50px] text-blue">{sumUser[0].user_count}
+                                <p className='text-sm inline pl-2'>people</p></span>
+
+                        </>
+                    ) : (
+                        <p className="text-center px-8 pt-4 text-4xl text-blue font-semibold">Loading...</p>
+                    )}
+                </div>
+
+                <div className="rounded-xl bg-white border-white w-72  pt-4 pl-8 mr-8">
+                    <p className='text-xl flex items-center  text-blue'><LineChartOutlined style={{
+                        background: '#0F2C59',
+                        borderRadius: '20px',
+                        fontSize: '20px',
+                        padding: '10px',
+                        color: '#F8F6F4',
+                        marginRight: '15px',
+                    }} /> Total Score</p>
+                    {sumScore[0] ? (
+                        <>
+                            <span className="text-center pl-14 text-[50px] text-blue ">{sumScore[0].sum_score}
+                                <p className='text-sm inline pl-2'>score</p></span>
+
+                        </>
+                    ) : (
+                        <p className="text-center px-8 pt-4 text-4xl text-blue font-semibold">Loading...</p>
+                    )}
+                </div>
+
+                <div className="rounded-xl bg-white border-white w-72  pt-4 pl-8">
+                    <p className='text-xl flex items-center  text-blue'><SolutionOutlined style={{
+                        background: '#0F2C59',
+                        borderRadius: '20px',
+                        fontSize: '20px',
+                        padding: '10px',
+                        color: '#F8F6F4',
+                        marginRight: '15px',
+                    }} /> Total time</p>
+                    {sumTime[0] ? (
+                        <>
+                            <span className="text-center pl-14 text-[50px] text-blue">{sumTime[0].sum_time}
+                                <p className='text-sm inline pl-2'>minute</p></span>
+
+                        </>
+                    ) : (
+                        <p className="text-center px-8 pt-4 text-4xl text-blue font-semibold">Loading...</p>
+                    )}
+                </div>
+
             </div>
-            <div>
-                <h2>กราฟจำนวนผู้ใช้ตามสาขา</h2>
-                <canvas id="userChart" width="400" height="200"></canvas>
+            <div className='flex'>
+                <div className='w-[60%] h-[450px] mt-10 mr-10 rounded-xl bg-white border-white px-10 pb-10 pt-5'>
+                    <h2 className='text-lg text-center pb-4'>User's 7-day Total Rating Graph</h2>
+                    <Line data={chartDataScore} options={{ maintainAspectRatio: false }}
+                        style={{
+                            height: '340px'
+                        }} />
+                </div>
+
+                <div className='w-[40%] h-[450px] mt-10 rounded-xl bg-white border-white px-10 pb-10 pt-5'>
+                    <p className='text-xl flex items-center  text-blue'><TrophyOutlined style={{
+                        background: '#0F2C59',
+                        borderRadius: '20px',
+                        fontSize: '20px',
+                        padding: '10px',
+                        color: '#F8F6F4',
+                        marginRight: '15px',
+                    }} />Top 10 User's Score</p>
+                    {topTenScore.map((item, index) => (
+                        <div key={index} className='mt-3 flex justify-between'>
+                            <span>{index + 1}. </span>
+                            <span className='mx-3 w-36'>{item.username}</span>
+                            <span className='mx-3 w-36'>{item.fname} {item.lname}</span>
+                            <span className='mx-3 '>score : {item.total_score}</span>
+                        </div>
+                    ))}
+                    {topTenScore.map((item, index) => (
+                        <div key={index} className='mt-3 flex justify-between'>
+                            <span>{index + 1}. </span>
+                            <span className='mx-3 w-36'>{item.username}</span>
+                            <span className='mx-3 w-36'>{item.fname} {item.lname}</span>
+                            <span className='mx-3 '>score : {item.total_score}</span>
+                        </div>
+                    ))}
+                    {topTenScore.map((item, index) => (
+                        <div key={index} className='mt-3 flex justify-between'>
+                            <span>{index + 1}. </span>
+                            <span className='mx-3 w-36'>{item.username}</span>
+                            <span className='mx-3 w-36'>{item.fname} {item.lname}</span>
+                            <span className='mx-3 '>score : {item.total_score}</span>
+                        </div>
+                    ))}
+                    {topTenScore.map((item, index) => (
+                        <div key={index} className='mt-3 flex justify-between'>
+                            <span>{index + 1}. </span>
+                            <span className='mx-3 w-36'>{item.username}</span>
+                            <span className='mx-3 w-36'>{item.fname} {item.lname}</span>
+                            <span className='mx-3 '>score : {item.total_score}</span>
+                        </div>
+                    ))}
+                    {topTenScore.map((item, index) => (
+                        <div key={index} className='mt-3 flex justify-between'>
+                            <span>{index + 1}. </span>
+                            <span className='mx-3 w-36'>{item.username}</span>
+                            <span className='mx-3 w-36'>{item.fname} {item.lname}</span>
+                            <span className='mx-3 '>score : {item.total_score}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div className='w-[100%] h-[450px] mt-10 mr-10 rounded-xl bg-white border-white px-10 pb-10 pt-5'>
+                <h2 className='text-lg text-center pb-4'>User's Institution Data</h2>
+                <Bar
+                    data={chartData}
+                    options={{
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                            },
+                        },
+                    }}
+                    style={{
+                        height: '350px'
+                    }} 
+                    
+                />
             </div>
         </div>
     );
-}
+};
 
 export default Home;
