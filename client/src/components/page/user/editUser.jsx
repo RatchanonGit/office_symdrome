@@ -89,10 +89,10 @@ const EditUser = ({ userId, data, onClose, onUpdated }) => {
     return (
         <div className='h-full flex justify-center items-center'>
             <form className='w-auto' onSubmit={handleSubmit}>
-                <h1 className='text-4xl font-semibold uppercase text-blue'>Edit User</h1>
-                <div className="flex mt-9">
+                <h1 className='text-4xl  uppercase text-blue'>Edit User</h1>
+                <div className="flex mt-5">
                     <div className="w-[140px] mr-8">
-                        <label className="block text-lg font-semibold text-blue">title:</label>
+                        <label className="block text-lg  text-blue">Title :</label>
                         <select
                             name="title_id"
                             onChange={handleChange}
@@ -108,7 +108,7 @@ const EditUser = ({ userId, data, onClose, onUpdated }) => {
                         </select>
                     </div>
                     <div className="w-[300px] mr-8">
-                        <label className="block text-lg font-semibold text-blue">First Name :</label>
+                        <label className="block text-lg  text-blue">First Name :</label>
                         <input
                             type="text"
                             name="fname"
@@ -118,7 +118,7 @@ const EditUser = ({ userId, data, onClose, onUpdated }) => {
                         />
                     </div>
                     <div className="w-[300px]">
-                        <label className="block text-lg font-semibold text-blue">Last Name :</label>
+                        <label className="block text-lg  text-blue">Last Name :</label>
                         <input
                             type="text"
                             name="lname"
@@ -131,7 +131,7 @@ const EditUser = ({ userId, data, onClose, onUpdated }) => {
 
                 <div className="mt-6 flex">
                     <div className="w-[385px] mr-8">
-                        <label className="block text-lg font-semibold text-blue">Email :</label>
+                        <label className="block text-lg  text-blue">Email :</label>
                         <input
                             type="email"
                             name="email"
@@ -141,7 +141,7 @@ const EditUser = ({ userId, data, onClose, onUpdated }) => {
                         />
                     </div>
                     <div className="w-[385px] mr-8">
-                        <label className="block text-lg font-semibold text-blue">Tel :</label>
+                        <label className="block text-lg  text-blue">Tel :</label>
                         <input
                             type="text"
                             name="tel"
@@ -153,7 +153,7 @@ const EditUser = ({ userId, data, onClose, onUpdated }) => {
                 </div>
                 <div className="mt-6 flex">
                     <div className="w-[300px] mr-8">
-                        <label className="block text-lg font-semibold text-blue">Institution :</label>
+                        <label className="block text-lg  text-blue">Institution :</label>
                         <select
                             name="institution_id"
                             onChange={handleChange}
@@ -170,7 +170,7 @@ const EditUser = ({ userId, data, onClose, onUpdated }) => {
                     </div>
 
                     <div className="w-[200px] mr-8">
-                        <label className="block text-lg font-semibold text-blue">Role :</label>
+                        <label className="block text-lg  text-blue">Role :</label>
                         <select
                             name="role_id"
                             onChange={handleChange}

@@ -1,4 +1,4 @@
-const getUsers = `SELECT u.user_id, u.username, u.fname, u.lname, u.email, u.tel,   
+const getUsers = `SELECT u.user_id, u.username, u.fname, u.lname, u.email, u.tel, u.image , 
                   r.role_name, 
                   i.institution_name, 
                   t.title_name 

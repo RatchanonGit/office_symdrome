@@ -73,10 +73,10 @@ const EditSchedules = ({ schedulesId, schedules, onClose, onUpdated }) => {
     }, [schedules, user, schedulesId]);
 
     return (
-        <div className='bg-[#fbf9ff] min-h-full flex justify-center items-center'>
+        <div className='min-h-full flex justify-center items-center'>
             <form className='w-auto' onSubmit={handleSubmit} >
-                <h1 className='text-4xl font-semibold uppercase text-black mb-10'>Update Schedules</h1>
-                <label className="block text-lg font-semibold mt-5 text-black">Select Days :</label>
+                <h1 className='text-4xl  uppercase text-black mb-10'>Update Schedules</h1>
+                <label className="block text-lg  mt-5 text-black">Select Days :</label>
                 <div className="flex flex-wrap gap-4 mt-2">
                     {weekdays.map((day) => (
                         <label key={day} className="flex items-center space-x-2">
@@ -95,7 +95,7 @@ const EditSchedules = ({ schedulesId, schedules, onClose, onUpdated }) => {
 
                 <div className="mt-6 flex">
                     <div className="w-[385px] mr-8">
-                        <label className="block text-lg font-semibold text-black">Schedule_time :</label>
+                        <label className="block text-lg  text-black">Schedule_time :</label>
                         <input
                             type="text"
                             value={schesulesData.schedule_time}
@@ -106,7 +106,7 @@ const EditSchedules = ({ schedulesId, schedules, onClose, onUpdated }) => {
                     </div>
 
                     <div className="w-[385px] mr-8">
-                        <label className="block text-lg font-semibold text-black">Mode :</label>
+                        <label className="block text-lg  text-black">Mode :</label>
                         <select
                             name="mode"
                             onChange={handleChange}
@@ -125,7 +125,7 @@ const EditSchedules = ({ schedulesId, schedules, onClose, onUpdated }) => {
                 </div>
 
                 <div className="w-[800px] mr-8 mt-6">
-                    <label className="block text-lg font-semibold text-black">Task description :</label>
+                    <label className="block text-lg  text-black">Task description :</label>
                     <input
                         type="text"
                         value={schesulesData.task_description}
@@ -135,7 +135,7 @@ const EditSchedules = ({ schedulesId, schedules, onClose, onUpdated }) => {
                     />
                 </div>
                 <div className="w-[800px] mr-8 mt-6">
-                    <label className="block text-lg font-semibold text-black">Video :</label>
+                    <label className="block text-lg  text-black">Video :</label>
                     <input
                         type="text"
                         value={schesulesData.video_id}

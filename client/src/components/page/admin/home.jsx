@@ -122,10 +122,10 @@ const Home = () => {
         labels: chartLabels,
         datasets: [
             {
-                label: 'จำนวนผู้ใช้',
+                label: 'users',
                 data: chartDataPoints,
-                backgroundColor: '#0f2d5923', // สีของแท่งกราฟ
-                borderColor: '#0F2C59', // สีของเส้นขอบแท่งกราฟ
+                backgroundColor: '#0f2d5923',
+                borderColor: '#0F2C59', 
                 borderWidth: 2,
             },
         ],
@@ -155,7 +155,7 @@ const Home = () => {
                 </div>
 
                 <div className="rounded-xl bg-white border-white w-72  pt-4 pl-8 mr-8">
-                    <p className='text-xl flex items-center  text-blue'><ScheduleOutlined style={{
+                    <p className='text-xl flex items-center  text-blue'><UserOutlined style={{
                         background: '#0F2C59',
                         borderRadius: '20px',
                         fontSize: '20px',
@@ -175,7 +175,7 @@ const Home = () => {
                 </div>
 
                 <div className="rounded-xl bg-white border-white w-72  pt-4 pl-8 mr-8">
-                    <p className='text-xl flex items-center  text-blue'><LineChartOutlined style={{
+                    <p className='text-xl flex items-center  text-blue'><SolutionOutlined style={{
                         background: '#0F2C59',
                         borderRadius: '20px',
                         fontSize: '20px',
@@ -216,15 +216,23 @@ const Home = () => {
 
             </div>
             <div className='flex'>
-                <div className='w-[60%] h-[450px] mt-10 mr-10 rounded-xl bg-white border-white px-10 pb-10 pt-5'>
-                    <h2 className='text-lg text-center pb-4'>User's 7-day Total Rating Graph</h2>
+                <div className='w-[55%] h-[480px] mt-10 mr-10 rounded-xl bg-white border-white px-10 pb-10 pt-5'>
+                <p className='text-xl flex items-center justify-center  text-blue'><LineChartOutlined style={{
+                        background: '#0F2C59',
+                        borderRadius: '20px',
+                        fontSize: '20px',
+                        padding: '10px',
+                        color: '#F8F6F4',
+                        marginRight: '15px',
+                    }} />User's 7-day Total Rating Graph</p>
                     <Line data={chartDataScore} options={{ maintainAspectRatio: false }}
                         style={{
-                            height: '340px'
+                            height: '380px',
+                            marginTop : '10px'
                         }} />
                 </div>
 
-                <div className='w-[40%] h-[450px] mt-10 rounded-xl bg-white border-white px-10 pb-10 pt-5'>
+                <div className='w-[45%] h-[480px] mt-10 rounded-xl bg-white border-white px-10 pb-10 pt-5'>
                     <p className='text-xl flex items-center  text-blue'><TrophyOutlined style={{
                         background: '#0F2C59',
                         borderRadius: '20px',
@@ -234,49 +242,24 @@ const Home = () => {
                         marginRight: '15px',
                     }} />Top 10 User's Score</p>
                     {topTenScore.map((item, index) => (
-                        <div key={index} className='mt-3 flex justify-between'>
-                            <span>{index + 1}. </span>
+                        <div key={index} className='mt-3 flex '>
+                            <span>{index + 1}.</span>
                             <span className='mx-3 w-36'>{item.username}</span>
-                            <span className='mx-3 w-36'>{item.fname} {item.lname}</span>
-                            <span className='mx-3 '>score : {item.total_score}</span>
-                        </div>
-                    ))}
-                    {topTenScore.map((item, index) => (
-                        <div key={index} className='mt-3 flex justify-between'>
-                            <span>{index + 1}. </span>
-                            <span className='mx-3 w-36'>{item.username}</span>
-                            <span className='mx-3 w-36'>{item.fname} {item.lname}</span>
-                            <span className='mx-3 '>score : {item.total_score}</span>
-                        </div>
-                    ))}
-                    {topTenScore.map((item, index) => (
-                        <div key={index} className='mt-3 flex justify-between'>
-                            <span>{index + 1}. </span>
-                            <span className='mx-3 w-36'>{item.username}</span>
-                            <span className='mx-3 w-36'>{item.fname} {item.lname}</span>
-                            <span className='mx-3 '>score : {item.total_score}</span>
-                        </div>
-                    ))}
-                    {topTenScore.map((item, index) => (
-                        <div key={index} className='mt-3 flex justify-between'>
-                            <span>{index + 1}. </span>
-                            <span className='mx-3 w-36'>{item.username}</span>
-                            <span className='mx-3 w-36'>{item.fname} {item.lname}</span>
-                            <span className='mx-3 '>score : {item.total_score}</span>
-                        </div>
-                    ))}
-                    {topTenScore.map((item, index) => (
-                        <div key={index} className='mt-3 flex justify-between'>
-                            <span>{index + 1}. </span>
-                            <span className='mx-3 w-36'>{item.username}</span>
-                            <span className='mx-3 w-36'>{item.fname} {item.lname}</span>
+                            <span className='mx-3 w-48'>{item.fname} {item.lname}</span>
                             <span className='mx-3 '>score : {item.total_score}</span>
                         </div>
                     ))}
                 </div>
             </div>
-            <div className='w-[100%] h-[450px] mt-10 mr-10 rounded-xl bg-white border-white px-10 pb-10 pt-5'>
-                <h2 className='text-lg text-center pb-4'>User's Institution Data</h2>
+            <div className='w-[100%] h-[500px] mt-10 mr-10 rounded-xl bg-white border-white px-10 pb-10 pt-5'>
+            <p className='text-xl flex items-center justify-center  text-blue'><LineChartOutlined style={{
+                        background: '#0F2C59',
+                        borderRadius: '20px',
+                        fontSize: '20px',
+                        padding: '10px',
+                        color: '#F8F6F4',
+                        marginRight: '15px',
+                    }} />User's Institution Data</p>
                 <Bar
                     data={chartData}
                     options={{
@@ -288,7 +271,8 @@ const Home = () => {
                         },
                     }}
                     style={{
-                        height: '350px'
+                        marginTop : '10px',
+                        height: '400px'
                     }} 
                     
                 />

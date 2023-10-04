@@ -43,7 +43,7 @@ const adminCheck = async (req, res, next) => {
     const roleResult = await pool.query(queries.roleQuery, [userRoleId]);
     const userRoleName = roleResult.rows[0].role_name;
 
-    if (userRoleName === 'admin') {
+    if (userRoleName === 'Admin') {
       next();
     } else {
       return res.status(401).send("Access denied, Must be an admin level official only.");

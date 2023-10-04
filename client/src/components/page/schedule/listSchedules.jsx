@@ -128,7 +128,7 @@ const ListSchedules = () => {
         <div className='mx-10'>
             <div className='flex justify-center my-10'>
                 <div className='flex justify-between w-full'>
-                    <h1 className='text-3xl pr-7 text-black font-medium pt-1 inline'>SCHEDULES DATA</h1>
+                    <h1 className='text-3xl pr-7 text-black pt-1 inline'>SCHEDULES DATA</h1>
                     <div>
                         <button
                             className='bg-blue text-white py-2 px-3 rounded '
@@ -153,7 +153,7 @@ const ListSchedules = () => {
                 style={{
                     content: {
                         width: '1000px',
-                        height: '600px',
+                        height: 'auto',
                         margin: 'auto',
                         padding: 0,
                     },
@@ -173,7 +173,7 @@ const ListSchedules = () => {
                 onRequestClose={() => setIsEditModalOpen(false)}
                 style={{
                     content: {
-                        width: '1100px',
+                        width: '1000px',
                         height: 'auto',
                         margin: 'auto',
                         padding: 0,

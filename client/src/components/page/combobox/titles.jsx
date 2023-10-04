@@ -169,7 +169,7 @@ const Titles = () => {
         <div>
             <div className="flex justify-center my-10">
                 <form onSubmit={editMode ? handleUpdate : handleSubmit}>
-                    <h1 className='text-2xl pr-7 text-black font-medium pt-1 inline'>TITLE</h1>
+                    <h1 className='text-2xl pr-7 text-black  pt-1 inline'>TITLE</h1>
                     <input type="text" className='border rounded py-2 px-3 focus:outline-none focus:border-purple-500 text-black w-[480px] mr-5 text-lg'
                         placeholder='Enter title'
                         name='title_name'
@@ -203,7 +203,7 @@ const Titles = () => {
                 columns={columns}
                 dataSource={title}
                 pagination={{
-                    pageSize: 8,
+                    pageSize: 7,
                 }}
                 className='w-4/5 mx-auto '
             />

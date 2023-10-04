@@ -56,12 +56,12 @@ const Score = () => {
 
     return (
         <div className='m-12'>
-            <h1 className='text-3xl pr-7 text-black font-bold pt-1 mb-6'>SCORE</h1>
+            <h1 className='text-3xl pr-7 text-black  pt-1 mb-6'>SCORE</h1>
             <Table
                 columns={columns}
                 dataSource={score}
                 pagination={{
-                    pageSize: 8,
+                    pageSize: 7,
                 }}
                 className='w-full'
             

@@ -2,7 +2,7 @@ const sumUser = `SELECT COUNT(*) AS user_count
                  FROM users AS u 
                  INNER JOIN roles AS r 
                  ON u.role_id = r.role_id
-                 WHERE r.role_name = 'admin'`
+                 WHERE r.role_name = 'User'`
 
 const sumScore = `SELECT COALESCE(SUM(score_value), 0) AS sum_score 
                   FROM scores AS s
@@ -10,7 +10,7 @@ const sumScore = `SELECT COALESCE(SUM(score_value), 0) AS sum_score
                   ON u.user_id = s.user_id
                   INNER JOIN roles AS r 
                   ON u.role_id = r.role_id
-                  WHERE r.role_name = 'admin'`
+                  WHERE r.role_name = 'User'`
 
 const sumTime =  `SELECT COALESCE(SUM(watch_time), 0) AS sum_time
                   FROM scores AS s
@@ -18,7 +18,7 @@ const sumTime =  `SELECT COALESCE(SUM(watch_time), 0) AS sum_time
                   ON u.user_id = s.user_id
                   INNER JOIN roles AS r 
                   ON u.role_id = r.role_id
-                  WHERE r.role_name = 'admin'`
+                  WHERE r.role_name = 'User'`
 
 const sumScoreLimitDate = `WITH date_series AS (
                             SELECT generate_series(
@@ -40,7 +40,7 @@ const sumUserOnInstitution = `SELECT i.institution_name, COUNT(u.institution_id)
                               ON u.institution_id = i.institution_id
                               INNER JOIN roles AS r
                               ON u.role_id = r.role_id
-                              WHERE r.role_name = 'admin'     
+                              WHERE r.role_name = 'User'     
                               GROUP BY i.institution_name`
 
 const topTenScore = `SELECT u.username, u.fname , u.lname, SUM(s.score_value) AS total_score

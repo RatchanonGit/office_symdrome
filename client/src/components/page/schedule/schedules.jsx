@@ -70,8 +70,8 @@ const Schedules = ({ onCreated, onClose }) => {
     return (
         <div className='min-h-full flex justify-center items-center'>
                 <form className='w-auto' onSubmit={handleSubmit} >
-                    <h1 className='text-4xl font-semibold uppercase text-blue mb-10'>Create Schedules</h1>
-                    <label className="block text-lg font-semibold mt-5 text-blue">Select Days :</label>
+                    <h1 className='text-4xl uppercase text-blue mb-10'>Create Schedules</h1>
+                    <label className="block text-lg  mt-5 text-blue">Select Days :</label>
                     <div className="flex flex-wrap gap-4 mt-2">
                         {weekdays.map((day) => (
                             <label key={day} className="flex items-center space-x-2">
@@ -89,7 +89,7 @@ const Schedules = ({ onCreated, onClose }) => {
 
                     <div className="mt-6 flex">
                         <div className="w-[385px] mr-8">
-                            <label className="block text-lg font-semibold text-blue">Schedule_time :</label>
+                            <label className="block text-lg  text-blue">Schedule_time :</label>
                             <input
                                 type="text"
                                 value={value.schedule_time}
@@ -100,7 +100,7 @@ const Schedules = ({ onCreated, onClose }) => {
                         </div>
 
                         <div className="w-[385px] mr-8">
-                            <label className="block text-lg font-semibold text-blue">Mode :</label>
+                            <label className="block text-lg  text-blue">Mode :</label>
 
                             <select
                                 name="mode"
@@ -119,7 +119,7 @@ const Schedules = ({ onCreated, onClose }) => {
                     </div>
 
                     <div className="w-[750px] mr-8 mt-6">
-                        <label className="block text-lg font-semibold text-blue">Task description :</label>
+                        <label className="block text-lg  text-blue">Task description :</label>
                         <input
                             type="text"
                             value={value.task_description}
@@ -129,7 +129,7 @@ const Schedules = ({ onCreated, onClose }) => {
                         />
                     </div>
                     <div className="w-[750px] mr-8 mt-6">
-                        <label className="block text-lg font-semibold text-blue">Video :</label>
+                        <label className="block text-lg  text-blue">Video :</label>
                         <input
                             type="text"
                             value={value.video_id}

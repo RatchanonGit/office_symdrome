@@ -62,8 +62,8 @@ const Login = () => {
     }
   
     return (
-        <div className="min-h-[89vh] flex justify-between bg-slate-50" >
-            <img src={home} alt="home" className='w-3/5' />
+        <div className="min-h-[91vh] flex justify-between bg-slate-50" >
+            <img src={home} alt="home" className='w-3/5 ' />
             <div className="w-full max-w-md bg-white p-8">
                 <div className='bg-blue rounded-full p-8 shadow w-[125px] mx-auto mt-6'>
                     <RiAdminLine size={60} color='white' />

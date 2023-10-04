@@ -15,7 +15,7 @@ const SelectUser = ({ userId, data }) => {
     const chartRef = useRef(null);
     const chartInstanceRef = useRef(null);
     const [isScoreDataLoaded, setIsScoreDataLoaded] = useState(false);
-
+    
     const loadDataScoreAndtime = (authtoken) => {
         listSumScoreAndSumTime(userId, authtoken)
             .then(res => {
@@ -109,13 +109,12 @@ const SelectUser = ({ userId, data }) => {
         <div className="">
             {selectedUser && isScoreDataLoaded ? (
                 <div>
-                    <p className='text-center text-2xl my-2 text-blue'>User statistics</p>
+                    <p className='text-center text-xl my-2 text-blue'>User statistics</p>
                     <div className='flex items-center bg-blue px-3 py-1 text-white'>
                         <img src={selectedUser.image} alt="" className='w-16 h-16 mr-4 rounded-full object-cover ml-5' />
                         <div className="flex flex-col w-full">
                             <div className="flex justify-between items-center">
                                 <p className='text-base'>{selectedUser.title_name} {selectedUser.fname} {selectedUser.lname}</p>
-                                <p className='text-lg flex items-center mr-7'><AiFillStar className='inline mr-1 ' size={25} />  {selectedUser.rank}</p>
                             </div>
                             <p className='text-base'>Institution : {selectedUser.institution_name}</p>
                         </div>

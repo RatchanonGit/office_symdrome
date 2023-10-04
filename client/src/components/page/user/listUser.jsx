@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 import SelectUser from './SelectUser';
 import { Table } from 'antd';
 
-
 const ListUser = () => {
     const [data, setData] = useState([]);
     const [userQuery, setUserQuery] = useState("");
@@ -176,7 +175,7 @@ const ListUser = () => {
         <div className='mx-10'>
             <div className='flex justify-center my-10'>
                 <div className='flex justify-between w-full'>
-                    <h1 className='text-3xl pr-7 text-black font-medium pt-1 inline'>USER DATA</h1>
+                    <h1 className='text-3xl pr-7 text-black pt-1 inline'>USER DATA</h1>
                     <div>
                         <input
                             type="text"
@@ -197,7 +196,7 @@ const ListUser = () => {
                 columns={columns}
                 dataSource={data}
                 pagination={{
-                    pageSize: 8,
+                    pageSize: 7,
                 }}
                 className='w-full'
             />
@@ -210,6 +209,9 @@ const ListUser = () => {
                         height: 'auto',
                         margin: 'auto',
                         padding: 0,
+                    },
+                    overlay: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
                     },
                 }}
             >
@@ -246,7 +248,7 @@ const ListUser = () => {
                         width: '1000px',
                         height: '500px',
                         margin: 'auto',
-                        padding: 0,      
+                        padding: 0,
                     },
                     overlay: {
                         backgroundColor: 'rgba(0, 0, 0, 0.5)',
