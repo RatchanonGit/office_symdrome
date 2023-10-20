@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import {
-    listInstitution,
-    createInstitution,
-    removeInstitution,
-    updateInstitution
-} from '../../functions/institution';
+    listTitle,
+    createTitle,
+    removeTitle,
+    updateTitle
+} from '../../functions/title';
 import { useSelector } from "react-redux";
 import { Table } from 'antd';
 import { toast } from "react-toastify";
 
-const Institutions = () => {
+const Titles = () => {
     const { user } = useSelector((state) => ({ ...state }));
-    const [institution, setInstitution] = useState([]);
+    const [title, setTitle] = useState([]);
     const [editMode, setEditMode] = useState(false);
-    const [selectInstitutionId, setSelectInstitutionId] = useState(null);
+    const [selectTitleId, setSelectTitleId] = useState(null);
     const [value, setValue] = useState({
-        institution_name: ""
+        title_name: ""
     })
 
     const columns = [
         {
             title: 'ID',
-            dataIndex: 'institution_id',
+            dataIndex: 'title_id',
             width: 50,
         },
         {
             title: 'Name',
-            dataIndex: 'institution_name',
+            dataIndex: 'title_name',
             width: 150,
         },
         {
@@ -35,7 +35,7 @@ const Institutions = () => {
             width: 30,
             render: (text, record) => (
                 <button className='text-red-600 underline'
-                    onClick={() => handleRemove(record.institution_id)}
+                    onClick={() => handleRemove(record.title_id)}
                 >
                     Delete</button>
             ),
@@ -55,13 +55,13 @@ const Institutions = () => {
     ];
 
     useEffect(() => {
-        loadDataInstitution(user.token);
+        loadDataTitle(user.token);
     }, [user]);
 
-    const loadDataInstitution = (authtoken) => {
-        listInstitution(authtoken)
+    const loadDataTitle = (authtoken) => {
+        listTitle(authtoken)
             .then(res => {
-                setInstitution(res.data);
+                setTitle(res.data);
             })
             .catch(error => {
                 console.log(error.response.data);
@@ -70,23 +70,23 @@ const Institutions = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (!value.institution_name) {
-            toast.error(('Please input Institution'), {
+        if (!value.title_name) {
+            toast.error(('Please input Title'), {
                 position: "top-center",
                 autoClose: 2000
             });
         }
         else {
-            createInstitution(user.token,value)
+            createTitle(user.toekn,value)
                 .then(res => {
                     console.log(res.data)
                     toast.success((res.data), {
                         position: "top-center",
                         autoClose: 2000
                     });
-                    loadDataInstitution(user.token);
+                    loadDataTitle(user.token);
                     setValue({
-                        institution_name: ""
+                        title_name: ""
                     });
 
                 }).catch(error => {
@@ -100,17 +100,17 @@ const Institutions = () => {
 
     const handleUpdate = (e) => {
         e.preventDefault()
-        updateInstitution(user.token, selectInstitutionId, value)
+        updateTitle(user.token, selectTitleId, value)
             .then(res => {
                 toast.success((res.data), {
                     position: "top-center",
                     autoClose: 2000
                 });
-                loadDataInstitution(user.token);
+                loadDataTitle(user.token);
                 setEditMode(false);
-                setSelectInstitutionId(null);
+                setSelectTitleId(null);
                 setValue({
-                    institution_name: ""
+                    title_name: ""
                 });
             })
             .catch(error => {
@@ -123,26 +123,26 @@ const Institutions = () => {
 
     const handleEdit = (item) => {
         setEditMode(true);
-        setSelectInstitutionId(item.institution_id)
+        setSelectTitleId(item.title_id)
         setValue({
-            institution_name : item.institution_name
+            title_name : item.title_name
         });
     };
 
     const handleCancelEdit = (e) => {
         e.preventDefault()
         setEditMode(false);
-        setSelectInstitutionId(null);
+        setSelectTitleId(null);
         setValue({
-            institution_name: ""
+            title_name: ""
         });
     };
 
     const handleRemove = (id) => {
-        if (window.confirm("Are You Sure Delete!!")) {
-            removeInstitution(user.token, id)
+        if (window.confirm("Are you sure you want to delete this?")) {
+            removeTitle(user.token, id)
                 .then((res) => {
-                    loadDataInstitution(user.token);
+                    loadDataTitle(user.token);
                     toast.success((res.data), {
                         position: "top-center",
                         autoClose: 2000
@@ -169,13 +169,12 @@ const Institutions = () => {
         <div>
             <div className="flex justify-center my-10">
                 <form onSubmit={editMode ? handleUpdate : handleSubmit}>
-                    <h1 className='text-2xl pr-7 text-black  pt-1 inline'>INSTITUTION</h1>
-                    <input type="text" className='border rounded py-2 px-3 focus:outline-none focus:border-purple-500 text-black w-[480px] mr-5 text-lg'
-                        placeholder='Enter institution'
-                        name='institution_name'
-                        value={value.institution_name}
+                    <h1 className='text-2xl pr-7 text-black  pt-1 inline'>TITLE</h1>
+                    <input type="text" className='border rounded py-2 px-3 focus:outline-none  text-black w-[480px] mr-5 text-lg'
+                        placeholder='Enter title'
+                        name='title_name'
+                        value={value.title_name}
                         onChange={handleChange}
-                        required
                     />
                     {editMode ? (
                         <>
@@ -202,7 +201,7 @@ const Institutions = () => {
 
             <Table
                 columns={columns}
-                dataSource={institution}
+                dataSource={title}
                 pagination={{
                     pageSize: 7,
                 }}
@@ -212,4 +211,4 @@ const Institutions = () => {
     );
 };
 
-export default Institutions;
+export default Titles;

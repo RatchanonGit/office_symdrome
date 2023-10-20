@@ -50,7 +50,7 @@ const adminCheck = async (req, res, next) => {
     }
   } catch (err) {
     console.log(err);
-    res.status(401).send("Admin Access denied");
+    res.status(401).send("Admin access denied");
   }
 };
 

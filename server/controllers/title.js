@@ -20,7 +20,7 @@ const addTitle = (req, res) => {
     const { title_name } = req.body;
     pool.query(queries.addTitle, [title_name], (error, results) => {
         if (error) throw error;
-        res.status(201).send(`Title Created Successfully.`)
+        res.status(201).send(`Title created successfully.`)
     })
 }
 

@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import {
-    listRole,
-    createRole,
-    removeRole,
-    updateRole
-} from '../../functions/role';
+    listInstitution,
+    createInstitution,
+    removeInstitution,
+    updateInstitution
+} from '../../functions/institution';
 import { useSelector } from "react-redux";
 import { Table } from 'antd';
 import { toast } from "react-toastify";
 
-const Roles = () => {
+const Institutions = () => {
     const { user } = useSelector((state) => ({ ...state }));
-    const [role, setRole] = useState([]);
+    const [institution, setInstitution] = useState([]);
     const [editMode, setEditMode] = useState(false);
-    const [selectRoleId, setSelectRoleId] = useState(null);
+    const [selectInstitutionId, setSelectInstitutionId] = useState(null);
     const [value, setValue] = useState({
-        role_name: ""
+        institution_name: ""
     })
 
     const columns = [
         {
             title: 'ID',
-            dataIndex: 'role_id',
+            dataIndex: 'institution_id',
             width: 50,
         },
         {
             title: 'Name',
-            dataIndex: 'role_name',
+            dataIndex: 'institution_name',
             width: 150,
         },
         {
@@ -35,7 +35,7 @@ const Roles = () => {
             width: 30,
             render: (text, record) => (
                 <button className='text-red-600 underline'
-                    onClick={() => handleRemove(record.role_id)}
+                    onClick={() => handleRemove(record.institution_id)}
                 >
                     Delete</button>
             ),
@@ -55,13 +55,13 @@ const Roles = () => {
     ];
 
     useEffect(() => {
-        loadDataRole(user.token);
+        loadDataInstitution(user.token);
     }, [user]);
 
-    const loadDataRole = (authtoken) => {
-        listRole(authtoken)
+    const loadDataInstitution = (authtoken) => {
+        listInstitution(authtoken)
             .then(res => {
-                setRole(res.data);
+                setInstitution(res.data);
             })
             .catch(error => {
                 console.log(error.response.data);
@@ -70,23 +70,25 @@ const Roles = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (!value.role_name) {
-            toast.error(('Please input Role'), {
+        if (!value.institution_name) {
+            toast.error(('Please input Institution'), {
                 position: "top-center",
                 autoClose: 2000
             });
         }
         else {
-            createRole(user.token,value)
+            createInstitution(user.token,value)
                 .then(res => {
+                    console.log(res.data)
                     toast.success((res.data), {
                         position: "top-center",
                         autoClose: 2000
                     });
-                    loadDataRole(user.token);
+                    loadDataInstitution(user.token);
                     setValue({
-                        role_name: ""
+                        institution_name: ""
                     });
+
                 }).catch(error => {
                     toast.error((error.response.data), {
                         position: "top-center",
@@ -98,17 +100,17 @@ const Roles = () => {
 
     const handleUpdate = (e) => {
         e.preventDefault()
-        updateRole(user.token, selectRoleId, value)
+        updateInstitution(user.token, selectInstitutionId, value)
             .then(res => {
                 toast.success((res.data), {
                     position: "top-center",
                     autoClose: 2000
                 });
-                loadDataRole(user.token);
+                loadDataInstitution(user.token);
                 setEditMode(false);
-                setSelectRoleId(null);
+                setSelectInstitutionId(null);
                 setValue({
-                    role_name: ""
+                    institution_name: ""
                 });
             })
             .catch(error => {
@@ -121,26 +123,26 @@ const Roles = () => {
 
     const handleEdit = (item) => {
         setEditMode(true);
-        setSelectRoleId(item.role_id)
+        setSelectInstitutionId(item.institution_id)
         setValue({
-            role_name : item.role_name
+            institution_name : item.institution_name
         });
     };
 
     const handleCancelEdit = (e) => {
         e.preventDefault()
         setEditMode(false);
-        setSelectRoleId(null);
+        setSelectInstitutionId(null);
         setValue({
-            role_name: ""
+            institution_name: ""
         });
     };
 
     const handleRemove = (id) => {
-        if (window.confirm("Are You Sure Delete!!")) {
-            removeRole(user.token, id)
+        if (window.confirm("Are you sure you want to delete this?")) {
+            removeInstitution(user.token, id)
                 .then((res) => {
-                    loadDataRole(user.token);
+                    loadDataInstitution(user.token);
                     toast.success((res.data), {
                         position: "top-center",
                         autoClose: 2000
@@ -167,12 +169,13 @@ const Roles = () => {
         <div>
             <div className="flex justify-center my-10">
                 <form onSubmit={editMode ? handleUpdate : handleSubmit}>
-                    <h1 className='text-2xl pr-7 text-black  pt-1 inline'>ROLE</h1>
-                    <input type="text" className='border rounded py-2 px-3 focus:outline-none focus:border-purple-500 text-black w-[480px] mr-5 text-lg'
-                        placeholder='Enter role'
-                        name='role_name'
-                        value={value.role_name}
+                    <h1 className='text-2xl pr-7 text-black  pt-1 inline'>INSTITUTION</h1>
+                    <input type="text" className='border rounded py-2 px-3 focus:outline-none  text-black w-[480px] mr-5 text-lg'
+                        placeholder='Enter institution'
+                        name='institution_name'
+                        value={value.institution_name}
                         onChange={handleChange}
+                        required
                     />
                     {editMode ? (
                         <>
@@ -199,7 +202,7 @@ const Roles = () => {
 
             <Table
                 columns={columns}
-                dataSource={role}
+                dataSource={institution}
                 pagination={{
                     pageSize: 7,
                 }}
@@ -209,4 +212,4 @@ const Roles = () => {
     );
 };
 
-export default Roles;
+export default Institutions;

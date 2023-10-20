@@ -8,8 +8,12 @@ export const listSchedules = async (authtoken) => {
   });
 };
 
-export const createSchedules = async (value) =>
-  await axios.post(process.env.REACT_APP_API + "/schedules", value);
+export const createSchedules = async (authtoken,value) =>
+  await axios.post(process.env.REACT_APP_API + "/schedules", value, {
+    headers: {
+      authtoken,
+    },
+  });
 
 export const removeSchedules = async (authtoken, id) => {
   return await axios.delete(process.env.REACT_APP_API + "/schedules/" + id, {

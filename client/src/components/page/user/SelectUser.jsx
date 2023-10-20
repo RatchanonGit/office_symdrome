@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'chart.js/auto';
 import { listSumScoreAndSumTime, listScoreLimitDate } from '../../functions/score'
 import { useSelector } from "react-redux";
-import { AiFillStar } from "react-icons/ai";
 
 // นำเข้า date adapter
 import 'chartjs-adapter-date-fns';

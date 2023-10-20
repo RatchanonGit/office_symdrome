@@ -20,7 +20,7 @@ const addRole = (req, res) => {
     const { role_name } = req.body;
     pool.query(queries.addRole, [role_name], (error, results) => {
         if (error) throw error;
-        res.status(201).send(`Role Created Successfully.`)
+        res.status(201).send(`Role created Successfully.`)
     })
 }
 

@@ -44,7 +44,7 @@ const createUser = async (req, res) => {
         const { rows } = await pool.query(queries.usernameQuery, [username]);
 
         if (rows.length > 0) {
-            return res.status(400).send("User Already exists");
+            return res.status(400).send("User already exists");
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -53,7 +53,7 @@ const createUser = async (req, res) => {
         await pool.query(queries.addUser, [username, hashedPassword, fname, lname, image,
             email, tel, title_id, institution_id, registration_date, role_id, rank]);
 
-        res.status(201).send(`User ${username} Created Successfully.`)
+        res.status(201).send(`Username ${username} created Successfully.`)
     } catch (err) {
         console.error(err);
         res.status(500).send("Server Error!");

@@ -17,11 +17,11 @@ const getScheduleById = (req, res) => {
 }
 
 const addSchedule = (req, res) => {
-    const { days_of_week, schedule_time, task_description, video_id, mode } = req.body;
-    pool.query(queries.addSchedule, [days_of_week, schedule_time, task_description, video_id, mode],
+    const { days_of_week, schedule_time, task_description, video_id, mode, image } = req.body;
+    pool.query(queries.addSchedule, [days_of_week, schedule_time, task_description, video_id, mode, image],
         (error, results) => {
             if (error) throw error;
-            res.status(201).send(`Schedule Created Successfully.`)
+            res.status(201).send(`Schedule created Successfully.`)
         })
 }
 
@@ -35,9 +35,9 @@ const removeSchedule = (req, res) => {
 
 const updateSchedule = (req, res) => {
     const id = parseInt(req.params.id)
-    const { days_of_week, schedule_time, task_description, video_id, mode } = req.body
+    const { days_of_week, schedule_time, task_description, video_id, mode ,image } = req.body
 
-    pool.query(queries.updateSchedule, [days_of_week, schedule_time, task_description, video_id, mode, id],
+    pool.query(queries.updateSchedule, [days_of_week, schedule_time, task_description, video_id, mode, image, id],
         (error, results) => {
             if (error) throw error;
             res.status(200).send("Schedule updated successfully.")

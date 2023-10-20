@@ -73,7 +73,6 @@ const CreateUser = ({ onCreated, onClose }) => {
         e.preventDefault();
         createUser(user.token, value)
             .then(res => {
-                console.log(res.data);
                 toast.success(res.data, {
                     position: "top-center",
                     autoClose: 2000
@@ -104,6 +103,7 @@ const CreateUser = ({ onCreated, onClose }) => {
                         onChange={handleImageChange}
                         style={{ display: 'none' }}
                         id="imageInput"
+                        required
                     />
                     {value.image ? (
                         <div className="relative mt-3">
@@ -129,11 +129,13 @@ const CreateUser = ({ onCreated, onClose }) => {
                 </div>
 
                 <div className="flex w-full">
+
                     <div className="w-[140px] mr-8">
-                        <label className="block text-lg  text-blue">Title:</label>
+                        <label className="block text-lg  text-blue">Title</label>
                         <select
                             name="title_id"
                             onChange={handleChange}
+                            required
                             className="w-full border border-gray-300 rounded-md py-[10px] px-3"
                         >
                             <option value="">Select Title</option>
@@ -144,73 +146,92 @@ const CreateUser = ({ onCreated, onClose }) => {
                             ))}
                         </select>
                     </div>
-
                     <div className="w-[300px] mr-8">
-                        <label className="block text-lg  text-blue">Username :</label>
-                        <input
-                            type="text"
-                            name="username"
-                            onChange={handleChange}
-                            className="w-full border border-gray-300 rounded-md py-2 px-3"
-                        />
-                    </div>
-                    <div className="w-[300px]">
-                        <label className="block text-lg  text-blue">Password :</label>
-                        <input
-                            type="text"
-                            name="password"
-                            onChange={handleChange}
-                            className="w-full border border-gray-300 rounded-md py-2 px-3"
-                        />
-                    </div>
-                </div>
-
-                <div className="mt-6 flex">
-                    <div className="w-[385px] mr-8">
-                        <label className="block text-lg  text-blue">First Name :</label>
+                        <label className="block text-lg  text-blue">First name</label>
                         <input
                             type="text"
                             name="fname"
                             onChange={handleChange}
+                            required
+                            placeholder='input first name'
+                            pattern="[A-Za-z]+"
                             className="w-full border border-gray-300 rounded-md py-2 px-3"
                         />
                     </div>
-                    <div className="w-[385px]">
-                        <label className="block text-lg  text-blue">Last Name :</label>
+                    <div className="w-[300px]">
+                        <label className="block text-lg  text-blue">Last name</label>
                         <input
                             type="text"
                             name="lname"
                             onChange={handleChange}
+                            required
+                            placeholder='input last name'
+                            pattern="[A-Za-z]+"
                             className="w-full border border-gray-300 rounded-md py-2 px-3"
                         />
                     </div>
+
+                </div>
+                <div className="mt-6 flex">
+
+                    <div className="w-[385px] mr-8">
+                        <label className="block text-lg  text-blue">Username</label>
+                        <input
+                            type="text"
+                            name="username"
+                            onChange={handleChange}
+                            required
+                            placeholder='input username'
+                            pattern="[A-Za-z]+"
+                            className="w-full border border-gray-300 rounded-md py-2 px-3"
+                        />
+                    </div>
+                    <div className="w-[385px]">
+                        <label className="block text-lg  text-blue">Password</label>
+                        <input
+                            type="text"
+                            name="password"
+                            onChange={handleChange}
+                            required
+                            placeholder='input password'
+                            pattern="[A-Za-z0-9]+"
+                            className="w-full border border-gray-300 rounded-md py-2 px-3"
+                        />
+                    </div>
+
                 </div>
                 <div className="mt-6 flex">
                     <div className="w-[385px] mr-8">
-                        <label className="block text-lg  text-blue">Email :</label>
+                        <label className="block text-lg  text-blue">Email</label>
                         <input
                             type="email"
                             name="email"
                             onChange={handleChange}
+                            required
+                            placeholder='ex. john@gmail.com'
                             className="w-full border border-gray-300 rounded-md py-2 px-3"
                         />
                     </div>
                     <div className="w-[385px] mr-8">
-                        <label className="block text-lg  text-blue">Tel :</label>
+                        <label className="block text-lg  text-blue">Tel</label>
                         <input
                             type="text"
                             name="tel"
                             onChange={handleChange}
+                            required
+                            pattern="^(08|09|06)\d{1}-\d{5,10}$"
+                            placeholder='ex. 099-9909990'
                             className="w-full border border-gray-300 rounded-md py-2 px-3"
                         />
                     </div>
                 </div>
                 <div className="mt-6 flex">
                     <div className="w-[385px] mr-8">
-                        <label className="block text-lg  text-blue">Institution :</label>
+                        <label className="block text-lg  text-blue">Institution</label>
                         <select
                             name="institution_id"
                             onChange={handleChange}
+                            required
                             className="w-full border border-gray-300 rounded-md py-[10px] px-3"
                         >
                             <option value="">Select institution</option>
@@ -221,15 +242,15 @@ const CreateUser = ({ onCreated, onClose }) => {
                             ))}
                         </select>
                     </div>
-
                     <div className="w-[385px] ">
-                        <label className="block text-lg  text-blue">Role :</label>
+                        <label className="block text-lg  text-blue">Role</label>
                         <select
                             name="role_id"
                             onChange={handleChange}
+                            required
                             className="w-full border border-gray-300 rounded-md py-[10px] px-3"
                         >
-                            <option value="">Select Role</option>
+                            <option value="">Select role</option>
                             {role.map((item, index) => (
                                 <option key={index} value={item.role_id}>
                                     {item.role_name}
@@ -238,7 +259,7 @@ const CreateUser = ({ onCreated, onClose }) => {
                         </select>
                     </div>
                 </div>
-                <div className="mt-8 flex justify-end mr-8">
+                <div className="mt-8 flex  mr-8">
                     <button className="bg-blue text-white py-3 px-5 rounded-xl">Create User</button>
                 </div>
             </form>

@@ -20,7 +20,7 @@ const addInstitution = (req, res) => {
     const { institution_name } = req.body;
     pool.query(queries.addInstitution, [institution_name], (error, results) => {
         if (error) throw error;
-        res.status(201).send(`Institution Created Successfully.`)
+        res.status(201).send(`Institution created Successfully.`)
     })
 }
 

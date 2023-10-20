@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { listSchedules, removeSchedules } from '../../functions/schedules';
 import { useSelector } from "react-redux";
-import Schedules from './schedules';
+import Schedules from './createSchedules';
 import Modal from 'react-modal';
 import EditSchedules from './editSchedules';
 import { toast } from "react-toastify";
@@ -38,12 +38,7 @@ const ListSchedules = () => {
         {
             title: 'Task description',
             dataIndex: 'task_description',
-            width: 200,
-        },
-        {
-            title: 'Video ID',
-            dataIndex: 'video_id',
-            width: 200,
+            width: 300,
         },
         {
             title: 'Delete',
@@ -94,7 +89,6 @@ const ListSchedules = () => {
         listSchedules(authtoken)
             .then(res => {
                 setSchedules(res.data);
-                console.log(res.data);
             })
             .catch(error => {
                 console.log(error.response.data);
@@ -107,7 +101,7 @@ const ListSchedules = () => {
 
     const handleRemove = (id) => {
         console.log(id)
-        if (window.confirm("Are You Sure Delete!!")) {
+        if (window.confirm("Are you sure you want to delete this?")) {
             removeSchedules(user.token, id)
                 .then((res) => {
                     loadData(user.token);
@@ -153,7 +147,7 @@ const ListSchedules = () => {
                 style={{
                     content: {
                         width: '1000px',
-                        height: 'auto',
+                        height: '600px',
                         margin: 'auto',
                         padding: 0,
                     },

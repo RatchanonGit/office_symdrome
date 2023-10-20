@@ -8,17 +8,16 @@ import {
     listTopTenScore,
     listSumUserOnInstitution,
     listSumScoreLimitDate
-} from '../../functions/dashboard';
+} from '../functions/dashboard';
 
 import {
     UserOutlined,
-    ScheduleOutlined,
     LineChartOutlined,
     SolutionOutlined,
     TrophyOutlined
 } from '@ant-design/icons';
 
-const Home = () => {
+const Dashboard = () => {
     const [sumUser, setSumUser] = useState([]);
     const [sumScore, setSumScore] = useState([]);
     const [sumTime, setSumTime] = useState([]);
@@ -81,7 +80,6 @@ const Home = () => {
         listSumUserOnInstitution(authtoken)
             .then((res) => {
                 setSumUserOnInstitution(res.data);
-                console.log(res.data);
             })
             .catch((error) => {
                 console.log(error.response.data);
@@ -165,7 +163,7 @@ const Home = () => {
                     }} />User online</p>
                     {sumUser[0] ? (
                         <>
-                            <span className="text-center pl-14 text-[50px] text-blue">{sumUser[0].user_count}
+                            <span className="text-center pl-14 text-[50px] text-blue">0
                                 <p className='text-sm inline pl-2'>people</p></span>
 
                         </>
@@ -232,7 +230,7 @@ const Home = () => {
                         }} />
                 </div>
 
-                <div className='w-[45%] h-[480px] mt-10 rounded-xl bg-white border-white px-10 pb-10 pt-5'>
+                <div className='w-[45%] h-[480px] mt-10 rounded-xl bg-white border-white px-10 pb-10 pt-5 '>
                     <p className='text-xl flex items-center  text-blue'><TrophyOutlined style={{
                         background: '#0F2C59',
                         borderRadius: '20px',
@@ -242,8 +240,8 @@ const Home = () => {
                         marginRight: '15px',
                     }} />Top 10 User's Score</p>
                     {topTenScore.map((item, index) => (
-                        <div key={index} className='mt-3 flex '>
-                            <span>{index + 1}.</span>
+                        <div key={index} className='mt-3 flex'>
+                            <span className='w-5'>{index + 1}.</span>
                             <span className='mx-3 w-36'>{item.username}</span>
                             <span className='mx-3 w-48'>{item.fname} {item.lname}</span>
                             <span className='mx-3 '>score : {item.total_score}</span>
@@ -281,4 +279,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Dashboard;

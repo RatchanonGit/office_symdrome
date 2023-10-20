@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { updateSchedules } from '../../functions/schedules'
-import { useSelector } from "react-redux";
+import React, { useState } from 'react';
+import { createSchedules } from '../../functions/schedules';
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
-const EditSchedules = ({ schedulesId, schedules, onClose, onUpdated }) => {
+const Schedules = ({ onCreated, onClose }) => {
     const { user } = useSelector((state) => ({ ...state }));
     const [value, setValue] = useState({
         days_of_week: "",
-        video_id: "",
-        schedule_time: "",
+        video_id : "",
+        schedule_time : "",
         image: null,
         task_description: "",
-        mode: "",
+        mode: "",  
     });
 
     const weekdays = [
@@ -28,6 +28,20 @@ const EditSchedules = ({ schedulesId, schedules, onClose, onUpdated }) => {
         'video',
         'publish'
     ]
+
+    const handleImageChange = (e) => {
+        const selectedImage = e.target.files[0];
+        if (selectedImage) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                setValue({
+                    ...value,
+                    image: e.target.result,
+                });
+            };
+            reader.readAsDataURL(selectedImage);
+        }
+    };
 
     const handleChange = (e) => {
         const { name, checked } = e.target;
@@ -47,19 +61,18 @@ const EditSchedules = ({ schedulesId, schedules, onClose, onUpdated }) => {
             [e.target.name]: e.target.value,
             days_of_week: updatedDays.join(',')
         });
-
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
         if (value.days_of_week && value.days_of_week.split(',').length >= 1) {
-            updateSchedules(user.token, schedulesId, value)
+            createSchedules(user.token, value)
                 .then(res => {
                     toast.success((res.data), {
                         position: "top-center",
                         autoClose: 2000
                     });
-                    onUpdated();
+                    onCreated();
                     onClose();
                 }).catch(error => {
                     toast.error((error.response.data), {
@@ -76,98 +89,71 @@ const EditSchedules = ({ schedulesId, schedules, onClose, onUpdated }) => {
     }
 
 
-    const handleImageChange = (e) => {
-        const selectedImage = e.target.files[0];
-        if (selectedImage) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                setValue({
-                    ...value,
-                    image: e.target.result,
-                });
-            };
-            reader.readAsDataURL(selectedImage);
-        }
-    };
-
-    useEffect(() => {
-        if (schedules && schedules.length > 0) {
-            const selectedSchedules = schedules.find((item) => item.schedules_id === schedulesId);
-            if (selectedSchedules) {
-                setValue(selectedSchedules);
-            }
-        }
-    }, [schedules, user, schedulesId]);
 
     return (
         <div className='min-h-full flex justify-center items-center'>
             <form className='w-auto' onSubmit={handleSubmit} >
-                <h1 className='text-4xl  uppercase text-black mb-8'>Update Schedules</h1>
-                <label className="block text-lg  mt-5 text-black">Select Days</label>
+                <h1 className='text-4xl uppercase text-black mb-8'>Create Schedules</h1>
+                <label className="block text-lg mt-5 text-blue">Select Days </label>
                 <div className="flex flex-wrap gap-4 mt-2">
                     {weekdays.map((day) => (
                         <label key={day} className="flex items-center space-x-2">
                             <input
                                 type="checkbox"
-                                value={day}
+                                value={value.days_of_week}
                                 name={day}
                                 onChange={handleChange}
-                                checked={value.days_of_week && value.days_of_week.includes(weekdays.indexOf(day).toString())}
                                 className="form-checkbox h-5 w-5 text-blue-600"
                             />
-                            <span className="text-lg text-black">{day}</span>
+                            <span className="text-lg text-blue">{day}</span>
                         </label>
                     ))}
                 </div>
-
                 <div className="mt-6 flex">
                     <div className="w-[385px] mr-8">
-                        <label className="block text-lg  text-black">Schedule_time</label>
+                        <label className="block text-lg text-blue">Schedule time </label>
                         <input
                             type="text"
                             value={value.schedule_time}
                             name="schedule_time"
                             onChange={handleChange}
-                            required
-                            pattern="^\d{2}:\d{2}$"
                             placeholder='Ex. 11:13 , 08:01'
+                            pattern="^\d{2}:\d{2}$"
+                            required
                             className="w-full border border-gray-300 rounded-md py-2 px-3 mt-2"
                         />
                     </div>
-
                     <div className="w-[385px] mr-8">
-                        <label className="block text-lg  text-black">Mode</label>
+                        <label className="block text-lg text-blue">Mode </label>
                         <select
                             name="mode"
+                            value={value.mode}
                             onChange={handleChange}
                             required
-                            className="w-[100%] border border-gray-300 rounded-md py-[10px] px-3 mt-2"
-                            value={value.mode}
+                            className="w-full border border-gray-300 rounded-md py-[10px] px-3 mt-2"
                         >
                             <option value="">Select mode</option>
                             {modeSelect.map((item, index) => (
-                                <option key={index} value={value.modeSelect}>
+                                <option key={index} value={item}>
                                     {item}
                                 </option>
                             ))}
                         </select>
-
                     </div>
                 </div>
-
-                <div className="w-[800px] mr-8 mt-6">
-                    <label className="block text-lg  text-black">Task description</label>
+                <div className="w-[800px] mt-6">
+                    <label className="block text-lg text-blue">Task description </label>
                     <input
                         type="text"
                         value={value.task_description}
+                        required
                         name="task_description"
                         placeholder='Please input task description.'
+                        pattern="^\S*$"
                         className="w-full border border-gray-300 rounded-md py-2 px-3 mt-2"
                         onChange={handleChange}
-                        required
                     />
                 </div>
-
                 <div className="w-[800px] mr-8 mt-6">
                     {value.mode === 'video' && (
                         <>
@@ -178,13 +164,13 @@ const EditSchedules = ({ schedulesId, schedules, onClose, onUpdated }) => {
                                 name="video_id"
                                 onChange={handleChange}
                                 required
-                                className="w-full border border-gray-300 rounded-md py-2 px-3 mt-2"
                                 placeholder='Please provide the URL of the desired video.'
                                 pattern="^\S*$"
+                                className="w-full border border-gray-300 rounded-md py-2 px-3 mt-2"
+                               
                             />
                         </>
                     )}
-
                     {value.mode === 'publish' && (
                         <>
                             <label className="block text-lg text-blue">Image </label>
@@ -199,13 +185,13 @@ const EditSchedules = ({ schedulesId, schedules, onClose, onUpdated }) => {
                     )}
                 </div>
 
-                <div className="mt-8">
-                    <button className="bg-blue py-3 px-5 rounded-xl font-normal text-white">Save Changes</button>
-                </div>
 
+                <div className="mt-6">
+                    <button className="bg-blue py-3 px-5 rounded-xl font-normal text-white">Create Schedules</button>
+                </div>
             </form>
         </div>
     );
 }
 
-export default EditSchedules;
+export default Schedules;

@@ -18,10 +18,10 @@ const Login = () => {
     const roleBaseRedirect = (role) => {
         if (role === "admin") {
             setTimeout(() => {
-                navigate("/admin/home");
+                navigate("/dashboard");
             }, 2000); 
         } else {
-            navigate("/admin/home");
+            navigate("/dashboard");
         }
     }
 
@@ -72,24 +72,26 @@ const Login = () => {
                 <h1 className="text-xl font-medium uppercase  mt-3 ml-[170px] text-blue">Login</h1>
                 <form onSubmit={handleSubmit} className='mt-9'>
                     <div className="mb-4">
-                        <label htmlFor="username" className="block text-base font-medium text-black uppercase">Username :</label>
+                        <label htmlFor="username" className="block text-base font-medium text-black uppercase">Username</label>
                         <input
                             type="text"
                             id="username"
                             name="username"
                             value={formData.username}
                             onChange={handleChange}
+                            placeholder='username'
                             className="w-full border border-gray-300 rounded-md py-3 px-3 shadow-sm focus:ring focus:ring-opacity-50 mt-4"
                         />
                     </div>
                     <div className="mb-4">
-                        <label htmlFor="password" className="block text-base font-medium text-black uppercase">Password :</label>
+                        <label htmlFor="password" className="block text-base font-medium text-black uppercase">Password</label>
                         <input
                             type="password"
                             id="password"
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
+                            placeholder='password'
                             className="w-full border border-gray-300 rounded-md py-3 px-3 shadow-sm focus:ring focus:ring-opacity-50 mt-4"
                         />
                     </div>

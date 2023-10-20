@@ -15,7 +15,7 @@ const login = async (req, res) => {
       // Check Password
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(400).send("Password Invalid!!");
+        return res.status(400).send("Password Invalid.");
       }
 
       const roleResult = await pool.query(queries.roleQuery, [user.role_id]);
@@ -33,13 +33,13 @@ const login = async (req, res) => {
 
       // Generate Token
       jwt.sign(payload, secretKey,
-        // { expiresIn: 3600 }, 
+        { expiresIn: 3600 },
         (err, token) => {
           if (err) throw err;
           res.json({ token, payload });
         });
     } else {
-      return res.status(400).send("User Not found!!!");
+      return res.status(400).send("User Not found.");
     }
   } catch (err) {
     console.log(err);

@@ -1,7 +1,7 @@
 const getUsers = `SELECT u.user_id, u.username, u.fname, u.lname, u.email, u.tel, u.image , 
-                  r.role_name, 
-                  i.institution_name, 
-                  t.title_name 
+                  r.role_name, r.role_id,
+                  i.institution_name, i.institution_id,
+                  t.title_name , t.title_id
                   FROM users u 
                   INNER JOIN roles r ON u.role_id = r.role_id 
                   INNER JOIN institution i ON u.institution_id = i.institution_id 

@@ -24,7 +24,7 @@ const Navbar = () => {
         {
             key: '1',
             label: (
-                <Link to="/admin/home">
+                <Link to="/dashboard">
                     Dashboard
                 </Link>
             ),

@@ -20,7 +20,7 @@ const addScore = (req, res) => {
     const { user_id, task_description, score_value, watch_time, score_date } = req.body;
     pool.query(queries.addScore, [user_id, task_description, score_value, watch_time, score_date], (error, results) => {
         if (error) throw error;
-        res.status(201).send(`Score Created Successfully.`)
+        res.status(201).send(`Score created successfully.`)
     })
 }
 

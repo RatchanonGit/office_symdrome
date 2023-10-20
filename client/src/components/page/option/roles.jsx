@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import {
-    listTitle,
-    createTitle,
-    removeTitle,
-    updateTitle
-} from '../../functions/title';
+    listRole,
+    createRole,
+    removeRole,
+    updateRole
+} from '../../functions/role';
 import { useSelector } from "react-redux";
 import { Table } from 'antd';
 import { toast } from "react-toastify";
 
-const Titles = () => {
+const Roles = () => {
     const { user } = useSelector((state) => ({ ...state }));
-    const [title, setTitle] = useState([]);
+    const [role, setRole] = useState([]);
     const [editMode, setEditMode] = useState(false);
-    const [selectTitleId, setSelectTitleId] = useState(null);
+    const [selectRoleId, setSelectRoleId] = useState(null);
     const [value, setValue] = useState({
-        title_name: ""
+        role_name: ""
     })
 
     const columns = [
         {
             title: 'ID',
-            dataIndex: 'title_id',
+            dataIndex: 'role_id',
             width: 50,
         },
         {
             title: 'Name',
-            dataIndex: 'title_name',
+            dataIndex: 'role_name',
             width: 150,
         },
         {
@@ -35,7 +35,7 @@ const Titles = () => {
             width: 30,
             render: (text, record) => (
                 <button className='text-red-600 underline'
-                    onClick={() => handleRemove(record.title_id)}
+                    onClick={() => handleRemove(record.role_id)}
                 >
                     Delete</button>
             ),
@@ -55,13 +55,13 @@ const Titles = () => {
     ];
 
     useEffect(() => {
-        loadDataTitle(user.token);
+        loadDataRole(user.token);
     }, [user]);
 
-    const loadDataTitle = (authtoken) => {
-        listTitle(authtoken)
+    const loadDataRole = (authtoken) => {
+        listRole(authtoken)
             .then(res => {
-                setTitle(res.data);
+                setRole(res.data);
             })
             .catch(error => {
                 console.log(error.response.data);
@@ -70,25 +70,23 @@ const Titles = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (!value.title_name) {
-            toast.error(('Please input Title'), {
+        if (!value.role_name) {
+            toast.error(('Please input Role'), {
                 position: "top-center",
                 autoClose: 2000
             });
         }
         else {
-            createTitle(user.toekn,value)
+            createRole(user.token,value)
                 .then(res => {
-                    console.log(res.data)
                     toast.success((res.data), {
                         position: "top-center",
                         autoClose: 2000
                     });
-                    loadDataTitle(user.token);
+                    loadDataRole(user.token);
                     setValue({
-                        title_name: ""
+                        role_name: ""
                     });
-
                 }).catch(error => {
                     toast.error((error.response.data), {
                         position: "top-center",
@@ -100,17 +98,17 @@ const Titles = () => {
 
     const handleUpdate = (e) => {
         e.preventDefault()
-        updateTitle(user.token, selectTitleId, value)
+        updateRole(user.token, selectRoleId, value)
             .then(res => {
                 toast.success((res.data), {
                     position: "top-center",
                     autoClose: 2000
                 });
-                loadDataTitle(user.token);
+                loadDataRole(user.token);
                 setEditMode(false);
-                setSelectTitleId(null);
+                setSelectRoleId(null);
                 setValue({
-                    title_name: ""
+                    role_name: ""
                 });
             })
             .catch(error => {
@@ -123,26 +121,26 @@ const Titles = () => {
 
     const handleEdit = (item) => {
         setEditMode(true);
-        setSelectTitleId(item.title_id)
+        setSelectRoleId(item.role_id)
         setValue({
-            title_name : item.title_name
+            role_name : item.role_name
         });
     };
 
     const handleCancelEdit = (e) => {
         e.preventDefault()
         setEditMode(false);
-        setSelectTitleId(null);
+        setSelectRoleId(null);
         setValue({
-            title_name: ""
+            role_name: ""
         });
     };
 
     const handleRemove = (id) => {
-        if (window.confirm("Are You Sure Delete!!")) {
-            removeTitle(user.token, id)
+        if (window.confirm("Are you sure you want to delete this?")) {
+            removeRole(user.token, id)
                 .then((res) => {
-                    loadDataTitle(user.token);
+                    loadDataRole(user.token);
                     toast.success((res.data), {
                         position: "top-center",
                         autoClose: 2000
@@ -169,11 +167,11 @@ const Titles = () => {
         <div>
             <div className="flex justify-center my-10">
                 <form onSubmit={editMode ? handleUpdate : handleSubmit}>
-                    <h1 className='text-2xl pr-7 text-black  pt-1 inline'>TITLE</h1>
-                    <input type="text" className='border rounded py-2 px-3 focus:outline-none focus:border-purple-500 text-black w-[480px] mr-5 text-lg'
-                        placeholder='Enter title'
-                        name='title_name'
-                        value={value.title_name}
+                    <h1 className='text-2xl pr-7 text-black  pt-1 inline'>ROLE</h1>
+                    <input type="text" className='border rounded py-2 px-3 focus:outline-none  text-black w-[480px] mr-5 text-lg'
+                        placeholder='Enter role'
+                        name='role_name'
+                        value={value.role_name}
                         onChange={handleChange}
                     />
                     {editMode ? (
@@ -201,7 +199,7 @@ const Titles = () => {
 
             <Table
                 columns={columns}
-                dataSource={title}
+                dataSource={role}
                 pagination={{
                     pageSize: 7,
                 }}
@@ -211,4 +209,4 @@ const Titles = () => {
     );
 };
 
-export default Titles;
+export default Roles;

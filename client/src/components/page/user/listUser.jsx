@@ -5,12 +5,12 @@ import CreateUser from './createUser';
 import EditUser from './editUser';
 import Modal from 'react-modal';
 import { toast } from "react-toastify";
-import SelectUser from './SelectUser';
+import SelectUser from './selectUser';
 import { Table } from 'antd';
 
 const ListUser = () => {
     const [data, setData] = useState([]);
-    const [userQuery, setUserQuery] = useState("");
+    const [userQuery,setUserQuery] = useState("");
     const { user } = useSelector((state) => ({ ...state }));
     const [editUserId, setEditUserId] = useState(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -128,7 +128,6 @@ const ListUser = () => {
         listUser(authtoken)
             .then(res => {
                 setData(res.data);
-                console.log(res.data);
             })
             .catch(error => {
                 console.log(error.response.data);
@@ -154,7 +153,7 @@ const ListUser = () => {
 
     const handleRemove = (id) => {
         console.log(id)
-        if (window.confirm("Are You Sure Delete!!")) {
+        if (window.confirm("Are you sure you want to delete this?")) {
             removeUser(user.token, id)
                 .then((res) => {
                     loadData(user.token);
@@ -179,7 +178,7 @@ const ListUser = () => {
                     <div>
                         <input
                             type="text"
-                            placeholder="Useranme search..."
+                            placeholder="useranme search..."
                             className='border rounded py-2 px-3 focus:outline-none focus:border-purple-500 text-black text-sm mr-2'
                             onChange={(e) => handleSearch(e.target.value)}
                         />
@@ -196,7 +195,7 @@ const ListUser = () => {
                 columns={columns}
                 dataSource={data}
                 pagination={{
-                    pageSize: 7,
+                    pageSize: 5,
                 }}
                 className='w-full'
             />

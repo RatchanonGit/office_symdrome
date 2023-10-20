@@ -17,6 +17,8 @@ const EditUser = ({ userId, data, onClose, onUpdated }) => {
         rank: "0",
     });
 
+    console.log(userData);
+
     const loadDataRole = (authtoken) => {
         listRole(authtoken)
             .then(res => {
@@ -92,14 +94,15 @@ const EditUser = ({ userId, data, onClose, onUpdated }) => {
                 <h1 className='text-4xl  uppercase text-blue'>Edit User</h1>
                 <div className="flex mt-5">
                     <div className="w-[140px] mr-8">
-                        <label className="block text-lg  text-blue">Title :</label>
+                        <label className="block text-lg  text-blue">Title</label>
                         <select
                             name="title_id"
                             onChange={handleChange}
                             value={userData.title_id}
+                            required
                             className="w-full border border-gray-300 rounded-md py-[10px] px-3"
                         >
-                            <option value="">Select Title</option>
+                            {/* <option value="">Select Title</option> */}
                             {title.map((item, index) => (
                                 <option key={index} value={item.title_id}>
                                     {item.title_name}
@@ -108,22 +111,28 @@ const EditUser = ({ userId, data, onClose, onUpdated }) => {
                         </select>
                     </div>
                     <div className="w-[300px] mr-8">
-                        <label className="block text-lg  text-blue">First Name :</label>
+                        <label className="block text-lg  text-blue">First name</label>
                         <input
                             type="text"
                             name="fname"
                             onChange={handleChange}
                             value={userData.fname}
+                            required
+                            pattern="[A-Za-z]+"
+                            placeholder='input first name'
                             className="w-full border border-gray-300 rounded-md py-2 px-3"
                         />
                     </div>
                     <div className="w-[300px]">
-                        <label className="block text-lg  text-blue">Last Name :</label>
+                        <label className="block text-lg  text-blue">Last name</label>
                         <input
                             type="text"
                             name="lname"
                             onChange={handleChange}
                             value={userData.lname}
+                            required
+                            pattern="[A-Za-z]+"
+                            placeholder='input last name'
                             className="w-full border border-gray-300 rounded-md py-2 px-3"
                         />
                     </div>
@@ -131,36 +140,41 @@ const EditUser = ({ userId, data, onClose, onUpdated }) => {
 
                 <div className="mt-6 flex">
                     <div className="w-[385px] mr-8">
-                        <label className="block text-lg  text-blue">Email :</label>
+                        <label className="block text-lg  text-blue">Email</label>
                         <input
                             type="email"
                             name="email"
                             onChange={handleChange}
                             value={userData.email}
+                            required
+                            placeholder='ex. john@gmail.com'
                             className="w-full border border-gray-300 rounded-md py-2 px-3"
                         />
                     </div>
                     <div className="w-[385px] mr-8">
-                        <label className="block text-lg  text-blue">Tel :</label>
+                        <label className="block text-lg  text-blue">Tel</label>
                         <input
                             type="text"
                             name="tel"
                             onChange={handleChange}
                             value={userData.tel}
+                            pattern="^(08|09|06)\d{1}-\d{5,10}$"
+                            placeholder='ex. 099-9909990'
                             className="w-full border border-gray-300 rounded-md py-2 px-3"
                         />
                     </div>
                 </div>
                 <div className="mt-6 flex">
-                    <div className="w-[300px] mr-8">
-                        <label className="block text-lg  text-blue">Institution :</label>
+                    <div className="w-[385px] mr-8">
+                        <label className="block text-lg  text-blue">Institution</label>
                         <select
                             name="institution_id"
                             onChange={handleChange}
                             value={userData.institution_id}
+                            required
                             className="w-full border border-gray-300 rounded-md py-[10px] px-3"
                         >
-                            <option value="">Select institution</option>
+                            {/* <option value="">Select institution</option> */}
                             {institution.map((item, index) => (
                                 <option key={index} value={item.institution_id}>
                                     {item.institution_name}
@@ -169,15 +183,16 @@ const EditUser = ({ userId, data, onClose, onUpdated }) => {
                         </select>
                     </div>
 
-                    <div className="w-[200px] mr-8">
-                        <label className="block text-lg  text-blue">Role :</label>
+                    <div className="w-[385px] mr-8">
+                        <label className="block text-lg  text-blue">Role</label>
                         <select
                             name="role_id"
                             onChange={handleChange}
                             value={userData.role_id}
+                            required
                             className="w-full border border-gray-300 rounded-md py-[10px] px-3"
                         >
-                            <option value="">Select Role</option>
+                            {/* <option value="">Select Role</option> */}
                             {role.map((item, index) => (
                                 <option key={index} value={item.role_id}>
                                     {item.role_name}
