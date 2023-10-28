@@ -17,6 +17,8 @@ const updateUser = `UPDATE users SET username = $1, password = $2, fname = $3, l
                     role_id = $11, rank = $12 WHERE user_id = $13`
 
 const usernameQuery = `SELECT username FROM users WHERE username = $1`;
+const emailQuery = `SELECT email FROM users WHERE email = $1`;
+const telQuery = `SELECT tel FROM users WHERE tel = $1`;
 const removeUser = "DELETE FROM users WHERE user_id = $1";
 const getUserById = "SELECT * FROM users WHERE user_id = $1";
 module.exports = {
@@ -25,5 +27,7 @@ module.exports = {
     addUser,
     removeUser,
     updateUser,
-    usernameQuery
+    usernameQuery,
+    emailQuery,
+    telQuery
 }

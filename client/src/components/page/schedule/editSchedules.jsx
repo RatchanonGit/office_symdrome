@@ -129,9 +129,16 @@ const EditSchedules = ({ schedulesId, schedules, onClose, onUpdated }) => {
                             name="schedule_time"
                             onChange={handleChange}
                             required
-                            pattern="^\d{2}:\d{2}$"
-                            placeholder='Ex. 11:13 , 08:01'
+                            pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
+                            maxLength={5}
+                            placeholder='HH:mm'
                             className="w-full border border-gray-300 rounded-md py-2 px-3 mt-2"
+                            onInvalid={(e) => {
+                                e.target.setCustomValidity("Please enter a time in the format HH:mm, where HH is hours (00-23) and mm is minutes (00-59).");
+                            }}
+                            onInput={(e) => {
+                                e.target.setCustomValidity("");
+                            }}
                         />
                     </div>
 
@@ -161,10 +168,18 @@ const EditSchedules = ({ schedulesId, schedules, onClose, onUpdated }) => {
                         type="text"
                         value={value.task_description}
                         name="task_description"
+                        pattern="^\S[A-Za-z0-9\s]*$"
                         placeholder='Please input task description.'
                         className="w-full border border-gray-300 rounded-md py-2 px-3 mt-2"
                         onChange={handleChange}
                         required
+                        onInvalid={(e) => {
+                            e.target.setCustomValidity("Please input task description.");
+                        }}
+                        onInput={(e) => {
+                            e.target.setCustomValidity("");
+                        }}   
+                        
                     />
                 </div>
 
@@ -177,10 +192,16 @@ const EditSchedules = ({ schedulesId, schedules, onClose, onUpdated }) => {
                                 value={value.video_id}
                                 name="video_id"
                                 onChange={handleChange}
-                                required
+                                required={value.mode === 'video'}
                                 className="w-full border border-gray-300 rounded-md py-2 px-3 mt-2"
                                 placeholder='Please provide the URL of the desired video.'
                                 pattern="^\S*$"
+                                onInvalid={(e) => {
+                                    e.target.setCustomValidity("Please provide the URL of the desired video.");
+                                }}
+                                onInput={(e) => {
+                                    e.target.setCustomValidity("");
+                                }}
                             />
                         </>
                     )}
@@ -191,7 +212,7 @@ const EditSchedules = ({ schedulesId, schedules, onClose, onUpdated }) => {
                             <input
                                 type="file"
                                 name="image"
-                                required
+                                required={value.mode === 'publish'}
                                 onChange={handleImageChange}
                                 className='mt-2'
                             />

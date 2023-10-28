@@ -7,7 +7,6 @@ const secretKey = process.env.JWT_SECRET;
 const login = async (req, res) => {
   try {
     const { username, password } = req.body;
-
     const userResult = await pool.query(queries.userQuery, [username]);
     const user = userResult.rows[0];
 
@@ -30,7 +29,6 @@ const login = async (req, res) => {
           lastname: user.lname,
         },
       };
-
       // Generate Token
       jwt.sign(payload, secretKey,
         { expiresIn: 3600 },

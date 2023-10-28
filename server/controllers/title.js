@@ -16,8 +16,12 @@ const getTitleById = (req, res) => {
     })
 }
 
-const addTitle = (req, res) => {
+const addTitle = async (req, res) => {
     const { title_name } = req.body;
+    const titleCheck = await pool.query(queries.titleQuery, [title_name]);
+    if (titleCheck.rows.length > 0) {
+        return res.status(400).send("An title has been established.");
+    }
     pool.query(queries.addTitle, [title_name], (error, results) => {
         if (error) throw error;
         res.status(201).send(`Title created successfully.`)
@@ -32,10 +36,13 @@ const removeTitle = (req, res) => {
     })
 }
 
-const updateTitle = (req, res) => {
+const updateTitle = async (req, res) => {
     const id = parseInt(req.params.id)
     const { title_name } = req.body
-
+    const titleCheck = await pool.query(queries.titleQuery, [title_name]);
+    if (titleCheck.rows.length > 0) {
+        return res.status(400).send("An title has been established.");
+    }
     pool.query(queries.updateTitle, [title_name, id], (error, results) => {
         if (error) throw error;
         res.status(200).send("Title updated successfully.")

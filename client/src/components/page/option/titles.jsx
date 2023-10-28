@@ -175,6 +175,13 @@ const Titles = () => {
                         name='title_name'
                         value={value.title_name}
                         onChange={handleChange}
+                        pattern="^[A-Z][a-z\s]+"
+                        onInvalid={(e) => {
+                            e.target.setCustomValidity("Please enter a title that starts with an uppercase letter followed by lowercase letters.");
+                        }}
+                        onInput={(e) => {
+                            e.target.setCustomValidity("");
+                        }}
                     />
                     {editMode ? (
                         <>

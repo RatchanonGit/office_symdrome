@@ -27,9 +27,20 @@ const removeUser = (req, res) => {
     })
 }
 
-const updateUser = (req, res) => {
+const updateUser = async (req, res) => {
     const id = parseInt(req.params.id)
     const { username, password, fname, lname, image, email, tel, title_id, institution_id, registration_date, role_id, rank } = req.body
+
+    const emailCheck = await pool.query(queries.emailQuery, [email]);
+    const telCheck = await pool.query(queries.telQuery, [tel]);
+
+    if (emailCheck.rows.length > 0) {
+        return res.status(400).send("Email is already in use");
+    }
+
+    if (telCheck.rows.length > 0) {
+        return res.status(400).send("Tel is already in use");
+    }
 
     pool.query(queries.updateUser, [username, password, fname, lname, image, email, tel, title_id, institution_id, registration_date, role_id, rank, id], (error, results) => {
         if (error) throw error;
@@ -41,15 +52,26 @@ const createUser = async (req, res) => {
     try {
         const { username, password, fname, lname, image, email, tel, title_id, institution_id,
             registration_date, role_id, rank } = req.body;
-        const { rows } = await pool.query(queries.usernameQuery, [username]);
 
-        if (rows.length > 0) {
-            return res.status(400).send("User already exists");
+        const usernameCheck = await pool.query(queries.usernameQuery, [username]);
+        const emailCheck = await pool.query(queries.emailQuery, [email]);
+        const telCheck = await pool.query(queries.telQuery, [tel]);
+
+        if (usernameCheck.rows.length > 0) {
+            return res.status(400).send("Username already exists");
+        }
+
+        if (emailCheck.rows.length > 0) {
+            return res.status(400).send("Email is already in use");
+        }
+
+        if (telCheck.rows.length > 0) {
+            return res.status(400).send("Tel is already in use");
         }
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        
+
         await pool.query(queries.addUser, [username, hashedPassword, fname, lname, image,
             email, tel, title_id, institution_id, registration_date, role_id, rank]);
 

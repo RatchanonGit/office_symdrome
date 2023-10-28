@@ -29,7 +29,7 @@ const auth = (req, res, next) => {
 
   } catch (err) {
     console.log(err);
-    res.status(401).send("Token Invavid!!");
+    res.status(401).send("Token invavid, Plase login again.");
   }
 };
 

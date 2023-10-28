@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 const EditUser = ({ userId, data, onClose, onUpdated }) => {
-
     const { user } = useSelector((state) => ({ ...state }));
     const [title, setTitle] = useState([]);
     const [role, setRole] = useState([]);
@@ -16,8 +15,6 @@ const EditUser = ({ userId, data, onClose, onUpdated }) => {
         registration_date: Date.now(),
         rank: "0",
     });
-
-    console.log(userData);
 
     const loadDataRole = (authtoken) => {
         listRole(authtoken)
@@ -118,9 +115,15 @@ const EditUser = ({ userId, data, onClose, onUpdated }) => {
                             onChange={handleChange}
                             value={userData.fname}
                             required
-                            pattern="[A-Za-z]+"
                             placeholder='input first name'
                             className="w-full border border-gray-300 rounded-md py-2 px-3"
+                            pattern="^[A-Z][a-z]+"
+                            onInvalid={(e) => {
+                                e.target.setCustomValidity("Please enter a first name that starts with an uppercase letter followed by lowercase letters.");
+                            }}
+                            onInput={(e) => {
+                                e.target.setCustomValidity("");
+                            }}
                         />
                     </div>
                     <div className="w-[300px]">
@@ -131,9 +134,15 @@ const EditUser = ({ userId, data, onClose, onUpdated }) => {
                             onChange={handleChange}
                             value={userData.lname}
                             required
-                            pattern="[A-Za-z]+"
                             placeholder='input last name'
                             className="w-full border border-gray-300 rounded-md py-2 px-3"
+                            pattern="^[A-Z][a-z]+"
+                            onInvalid={(e) => {
+                                e.target.setCustomValidity("Please enter a last name that starts with an uppercase letter followed by lowercase letters.");
+                            }}
+                            onInput={(e) => {
+                                e.target.setCustomValidity("");
+                            }}
                         />
                     </div>
                 </div>
@@ -161,6 +170,12 @@ const EditUser = ({ userId, data, onClose, onUpdated }) => {
                             pattern="^(08|09|06)\d{1}-\d{5,10}$"
                             placeholder='ex. 099-9909990'
                             className="w-full border border-gray-300 rounded-md py-2 px-3"
+                            onInvalid={(e) => {
+                                e.target.setCustomValidity("Please enter a phone number in the format 09X-XXXXXX, where X is a digit.");
+                            }}
+                            onInput={(e) => {
+                                e.target.setCustomValidity("");
+                            }}
                         />
                     </div>
                 </div>

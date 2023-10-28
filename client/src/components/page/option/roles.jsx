@@ -173,6 +173,13 @@ const Roles = () => {
                         name='role_name'
                         value={value.role_name}
                         onChange={handleChange}
+                        pattern="^[A-Z][a-z\s]+"
+                        onInvalid={(e) => {
+                            e.target.setCustomValidity("Please enter a role that starts with an uppercase letter followed by lowercase letters.");
+                        }}
+                        onInput={(e) => {
+                            e.target.setCustomValidity("");
+                        }}
                     />
                     {editMode ? (
                         <>

@@ -71,6 +71,7 @@ const CreateUser = ({ onCreated, onClose }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         createUser(user.token, value)
             .then(res => {
                 toast.success(res.data, {
@@ -138,7 +139,7 @@ const CreateUser = ({ onCreated, onClose }) => {
                             required
                             className="w-full border border-gray-300 rounded-md py-[10px] px-3"
                         >
-                            <option value="">Select Title</option>
+                            <option value="">Select a Title</option>
                             {title.map((item, index) => (
                                 <option key={index} value={item.title_id}>
                                     {item.title_name}
@@ -154,8 +155,14 @@ const CreateUser = ({ onCreated, onClose }) => {
                             onChange={handleChange}
                             required
                             placeholder='input first name'
-                            pattern="[A-Za-z]+"
                             className="w-full border border-gray-300 rounded-md py-2 px-3"
+                            pattern="^[A-Z][a-z]+"
+                            onInvalid={(e) => {
+                                e.target.setCustomValidity("Please enter a first name that starts with an uppercase letter followed by lowercase letters.");
+                            }}
+                            onInput={(e) => {
+                                e.target.setCustomValidity("");
+                            }}
                         />
                     </div>
                     <div className="w-[300px]">
@@ -166,24 +173,35 @@ const CreateUser = ({ onCreated, onClose }) => {
                             onChange={handleChange}
                             required
                             placeholder='input last name'
-                            pattern="[A-Za-z]+"
                             className="w-full border border-gray-300 rounded-md py-2 px-3"
+                            pattern="^[A-Z][a-z]+"
+                            onInvalid={(e) => {
+                                e.target.setCustomValidity("Please enter a last name that starts with an uppercase letter followed by lowercase letters.");
+                            }}
+                            onInput={(e) => {
+                                e.target.setCustomValidity("");
+                            }}
                         />
                     </div>
 
                 </div>
                 <div className="mt-6 flex">
-
                     <div className="w-[385px] mr-8">
-                        <label className="block text-lg  text-blue">Username</label>
+                        <label className="block text-lg text-blue">Username</label>
                         <input
                             type="text"
                             name="username"
                             onChange={handleChange}
                             required
                             placeholder='input username'
-                            pattern="[A-Za-z]+"
                             className="w-full border border-gray-300 rounded-md py-2 px-3"
+                            pattern="^[A-Z][a-z]+"
+                            onInvalid={(e) => {
+                                e.target.setCustomValidity("Please enter a username that starts with an uppercase letter followed by lowercase letters.");
+                            }}
+                            onInput={(e) => {
+                                e.target.setCustomValidity("");
+                            }}
                         />
                     </div>
                     <div className="w-[385px]">
@@ -196,9 +214,14 @@ const CreateUser = ({ onCreated, onClose }) => {
                             placeholder='input password'
                             pattern="[A-Za-z0-9]+"
                             className="w-full border border-gray-300 rounded-md py-2 px-3"
+                            onInvalid={(e) => {
+                                e.target.setCustomValidity("Please enter a password with letters (A-Z, a-z) and numbers (0-9) only.");
+                            }}
+                            onInput={(e) => {
+                                e.target.setCustomValidity("");
+                            }}
                         />
                     </div>
-
                 </div>
                 <div className="mt-6 flex">
                     <div className="w-[385px] mr-8">
@@ -221,7 +244,14 @@ const CreateUser = ({ onCreated, onClose }) => {
                             required
                             pattern="^(08|09|06)\d{1}-\d{5,10}$"
                             placeholder='ex. 099-9909990'
+                            maxLength={11}
                             className="w-full border border-gray-300 rounded-md py-2 px-3"
+                            onInvalid={(e) => {
+                                e.target.setCustomValidity("Please enter a phone number in the format 09X-XXXXXX, where X is a digit.");
+                            }}
+                            onInput={(e) => {
+                                e.target.setCustomValidity("");
+                            }}
                         />
                     </div>
                 </div>

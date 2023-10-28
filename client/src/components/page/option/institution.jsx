@@ -176,6 +176,13 @@ const Institutions = () => {
                         value={value.institution_name}
                         onChange={handleChange}
                         required
+                        pattern="^[A-Z][a-z\s]+"
+                        onInvalid={(e) => {
+                            e.target.setCustomValidity("Please enter a institution that starts with an uppercase letter followed by lowercase letters.");
+                        }}
+                        onInput={(e) => {
+                            e.target.setCustomValidity("");
+                        }}
                     />
                     {editMode ? (
                         <>
